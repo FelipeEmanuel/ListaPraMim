@@ -1,19 +1,23 @@
 package view;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import easyaccept.EasyAccept;
+
 public class Main {
 
-	public static void main(String[] args) {
-		Facade facade = new Facade();
+	public static void main(String[] args) throws Exception {
 		
-		facade.addProdutos("A", "Higiene", "por unidade");
-		facade.addProdutos("C", "Higiene", "quantidade fixa");
-		facade.addProdutos("B", "Higiene", "por unidade");
-		System.out.println(facade.pesquisaItens());
-		System.out.println(facade.pesquisaCategorias("Higiene"));
-		Integer id = 1;
-		System.out.println(facade.pesquisaItem(id));
-		System.out.println(facade.pesquisa("HiGiene"));
+		ArrayList<String> testes = new ArrayList<>();
+		testes.add("user_case" + File.separator + "use_case1.txt");
+		testes.add("user_case" + File.separator + "use_case2.txt");
+		testes.add("user_case" + File.separator + "use_case3.txt");
+		testes.add("user_case" + File.separator + "use_case4.txt");
+		//testes.add("user_case" + File.separator + "us4_test.txt");
 		
-	}
-
+		
+		EasyAccept.executeEasyAcceptTests("view.Facade", testes);
+}
+	
 }
