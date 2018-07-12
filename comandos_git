@@ -1,0 +1,9 @@
+-> Entrar na pasta do repositorio
+git add .
+git commit -m "<O que tu fez>"
+git push
+-> login e senha
+-> avisar aos outros membros de dar:
+git pull
+-> login e senha
+
