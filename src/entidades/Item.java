@@ -52,5 +52,5 @@ public class Item implements Comparable<Item>{
 	public int getId() {
 		return this.id;
 	}
-
+	
 }

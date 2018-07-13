@@ -8,8 +8,10 @@ public class ItemQI extends Item {
 	private String unidadeMedida;
 	private int valorMedida;
 	
-	public ItemQI(String nome, String categoria, int id) {
+	public ItemQI(String nome, String categoria, int id, int valor , String unidade) {
 		super(nome, categoria, id);
+		setUnidadeMedida(unidade);
+		setValorMedida(valor);
 	}
 
 	

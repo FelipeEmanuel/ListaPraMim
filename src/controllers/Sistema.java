@@ -1,9 +1,9 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
+import comparators.ComparadorNome;
 import entidades.Item;
 import entidades.ItemQI;
 import entidades.ItemQuilo;
@@ -11,7 +11,7 @@ import entidades.ItemUnidade;
 
 
 public class Sistema {
-	private static final Comparator<? super Item> Comparator = null;
+	
 	private HashMap<Integer, Item> itens;
 	private int id=1;
 	
@@ -21,43 +21,66 @@ public class Sistema {
 	
 	public void addProdutos(String nome, String categoria, String tipo) {
 		
-		if (tipo.equals("quantidade fixa")){
-			ItemQI item = new ItemQI(nome, categoria, id);
-			itens.put(id++,item);
-		}
-		
-		if (tipo.equals("por unidade")){
-			ItemQuilo item = new ItemQuilo(nome, categoria, id);
-			itens.put(id++,item);
-		}
-		
-		if (tipo.equals("por quilo")){
-			ItemUnidade item = new ItemUnidade(nome, categoria, id);
-			itens.put(id++,item);
-		}
 	}
 	
-	private void removerProduto(int id){
+	public void adicionaItemPorQtd(String nome, String categoria, int quantidade, String unidade) {
+		ItemQI item = new ItemQI(nome, categoria, id,quantidade,unidade);
+		itens.put(id++,item);
+	} 
+	
+	public void adicionaItemPorQuilo(String nome, String categoria) {
+		ItemQuilo item = new ItemQuilo(nome, categoria, id);
+		itens.put(id++,item);
+	}
+	
+	public void adicionaItemPorUnidade(String nome, String categoria, int unidade) {
+		ItemUnidade item = new ItemUnidade(nome, categoria, id, unidade);
+		itens.put(id++,item);
+	}
+	
+	public void removerProduto(int id){
 		if(itens.containsKey(id)) {
 			itens.remove(id);
 		}
 		else {
-			throw new IllegalArgumentException("ITEM NÃO CADASTRADO");
+			throw new IllegalArgumentException("Erro na atualizacao de item: item nao existe.");
 		}
 	}
 	
-	private void removerProduto(String nome, String categoria){
+	public void removerProduto(String nome, String categoria){
 		for(int i =1; i<= itens.size();i++){
 			if(itens.get(i).getNome().toLowerCase().equals(nome.toLowerCase()) 
 					&& itens.get(i).getCategoria().toLowerCase().equals(categoria.toLowerCase())) {
 				itens.remove(i);
 			}
 		}
-		throw new IllegalArgumentException("ITEM NÃO CADASTRADO");
+		throw new IllegalArgumentException("Erro na atualizacao de item: item nao existe.");
 	}
+
 	
-	private void addPreco(int id, String Mercado, double preco) {
-		itens.get(id).addPreco(Mercado, preco);
+	private String atualizaItem(int id,String atributo, String valor) {
+		if(!itens.containsKey(id))
+			return "Erro na atualizacao de item: item nao existe.";
+		switch(atributo)
+		{
+			case	"Nome":
+				if(valor != null)
+					itens.get(id).setNome(valor);
+				else
+					throw new IllegalArgumentException("Erro na atualizacao de item: Nome não pode ser nulo");
+			case	"Categoria":
+				if(valor != null)
+					itens.get(id).setCategoria(valor);
+				else
+					throw new IllegalArgumentException("Erro na atualizacao de item: Categoria não pode ser nulo");
+			case	 "ID":
+				throw new IllegalArgumentException("Erro na atualizacao de item: ID não pode ser mudado");
+		}
+		return "Erro na atualizacao de item: Atributo inexistente";
+	} 	
+	
+	public void adicionaPrecoItem(int id, String localDeCompra, double preco) {
+		itens.get(id).addPreco(localDeCompra, preco);
 
 	}
 	
@@ -71,7 +94,7 @@ public class Sistema {
 		for(Item i : itens.values()){
 			itens2.add(i);
 		}
-		//itens2.sort(Comparator);
+		itens2.sort(new ComparadorNome());
 		retorno = itens2.toString();
 		return retorno;
 	}
@@ -84,12 +107,13 @@ public class Sistema {
 				itens2.add(i);
 			}
 		}
-		//itens2.sort(Comparator);
+		itens2.sort(new ComparadorNome());
 		retorno = itens.toString();
 		return retorno;
 	}
 	
 	public String pesquisaPreço() {
+		
 		return "";
 	}
 

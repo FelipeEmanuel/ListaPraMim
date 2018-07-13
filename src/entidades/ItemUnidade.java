@@ -6,9 +6,12 @@ import java.util.HashMap;
 
 public class ItemUnidade extends Item {
 
+	
+	private int unidade;
 
-	public ItemUnidade(String nome, String categoria, int id) {
+	public ItemUnidade(String nome, String categoria, int id,int unidade) {
 		super(nome, categoria, id);
+		setUnidade(unidade);
 	}
 
 	@Override
@@ -19,6 +22,14 @@ public class ItemUnidade extends Item {
 	@Override
 	public void addPreco(String supermercado, double preco) {
 		precos.put(supermercado, preco);
+	}
+
+	public int getUnidade() {
+		return unidade;
+	}
+
+	public void setUnidade(int unidade) {
+		this.unidade = unidade;
 	}
 
 
