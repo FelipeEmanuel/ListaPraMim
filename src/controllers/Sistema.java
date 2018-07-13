@@ -36,7 +36,31 @@ public class Sistema {
 			itens.put(id++,item);
 		}
 	}
+	
+	private void removerProduto(int id){
+		if(itens.containsKey(id)) {
+			itens.remove(id);
+		}
+		else {
+			throw new IllegalArgumentException("ITEM NÃO CADASTRADO");
+		}
+	}
+	
+	private void removerProduto(String nome, String categoria){
+		for(int i =1; i<= itens.size();i++){
+			if(itens.get(i).getNome().toLowerCase().equals(nome.toLowerCase()) 
+					&& itens.get(i).getCategoria().toLowerCase().equals(categoria.toLowerCase())) {
+				itens.remove(i);
+			}
+		}
+		throw new IllegalArgumentException("ITEM NÃO CADASTRADO");
+	}
+	
+	private void addPreco(int id, String Mercado, double preco) {
+		itens.get(id).addPreco(Mercado, preco);
 
+	}
+	
 	public String pesquisaItem(Integer id) {
 		return itens.get(id).toString();
 	}
