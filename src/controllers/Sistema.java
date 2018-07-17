@@ -19,26 +19,26 @@ public class Sistema {
 		itens = new HashMap<Integer, Item>();
 	}
 	
-	public void addProdutos(String nome, String categoria, String tipo) {
-		
-	}
 	
-	public void adicionaItemPorQtd(String nome, String categoria, int quantidade, String unidade) {
-		ItemQI item = new ItemQI(nome, categoria, id,quantidade,unidade);
-		itens.put(id++,item);
-	} 
+	public void adicionaItemPorQtd(String nome, String categoria, int quantidade, String unidade,String localDeCompra, double preco) {    
+		ItemQI item = new ItemQI(nome, categoria, id,quantidade,unidade);  
+		item.addPreco(localDeCompra, preco);        
+		itens.put(id++,item);     
+		}        
 	
-	public void adicionaItemPorQuilo(String nome, String categoria) {
-		ItemQuilo item = new ItemQuilo(nome, categoria, id);
-		itens.put(id++,item);
-	}
+	public void adicionaItemPorQuilo(String nome, String categoria, String localDeCompra, double preco) {     
+		ItemQuilo item = new ItemQuilo(nome, categoria, id);       
+		item.addPreco(localDeCompra, preco);     
+		itens.put(id++,item);    
+		}         
 	
-	public void adicionaItemPorUnidade(String nome, String categoria, int unidade) {
-		ItemUnidade item = new ItemUnidade(nome, categoria, id, unidade);
-		itens.put(id++,item);
-	}
+	public void adicionaItemPorUnidade(String nome, String categoria, int unidade, String localDeCompra, double preco) {    
+		ItemUnidade item = new ItemUnidade(nome, categoria, id, unidade);     
+		item.addPreco(localDeCompra, preco);    
+		itens.put(id++,item);  
+		}
 	
-	public void removerProduto(int id){
+	public void deletaItem(int id){
 		if(itens.containsKey(id)) {
 			itens.remove(id);
 		}
@@ -58,7 +58,7 @@ public class Sistema {
 	}
 
 	
-	private String atualizaItem(int id,String atributo, String valor) {
+	public String atualizaItem(int id,String atributo, String valor) {
 		if(!itens.containsKey(id))
 			return "Erro na atualizacao de item: item nao existe.";
 		switch(atributo)
@@ -84,7 +84,7 @@ public class Sistema {
 
 	}
 	
-	public String pesquisaItem(Integer id) {
+	public String getItem(Integer id) {
 		return itens.get(id).toString();
 	}
 	
@@ -99,7 +99,7 @@ public class Sistema {
 		return retorno;
 	}
 	
-	public String pesquisaCategorias(String categoria) {
+	public String getItemPorCategoria(String categoria) {
 		String retorno = "";
 		ArrayList<Item> itens2 = new ArrayList();
 		for(Item i : itens.values()){
@@ -112,12 +112,12 @@ public class Sistema {
 		return retorno;
 	}
 	
-	public String pesquisaPreço() {
+	public String getItemPorMenorPreco() {
 		
 		return "";
 	}
 
-	public String pesquisa(String p) {
+	public String getItemPorPesquisa(String p) {
 		String pesquisa = p.toLowerCase();
 		String retorno = "";
 		ArrayList<Item> itens2 = new ArrayList();
