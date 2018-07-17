@@ -18,7 +18,7 @@ public class ItemQI extends Item {
 	
 	@Override
 	public String toString() {
-		return getId() + ". " + getNome() + ", " + getCategoria() + ","+ getValorMedida() + getUnidadeMedida() + "Preço:" + precos.toString();
+		return getId() + ". " + getNome() + ", " + getCategoria() + ", "+ getValorMedida() + " " + getUnidadeMedida() + ", Preco:" + getPreco();
 	}
 
 	@Override

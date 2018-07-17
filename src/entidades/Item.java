@@ -53,4 +53,14 @@ public class Item implements Comparable<Item>{
 		return this.id;
 	}
 	
+	public String getPreco() {
+		String retorno = " <";
+		for(String s: precos.keySet()) {
+			String p =precos.get(s).toString();
+			retorno += s + ", R$ " + (precos.get(s).toString().format("%.2f", precos.get(s)).replace(".", ",")) + ";";
+		}
+		retorno += ">";
+		return retorno;
+	}
+
 }

@@ -16,7 +16,7 @@ public class ItemUnidade extends Item {
 
 	@Override
 	public String toString() {
-		return getId() + ". " + getNome() + ", " + getCategoria() + ","+ "Preço:" + precos.toString();
+		return getId() + ". " + getNome() + ", " + getCategoria() + ", "+ "Preco:" + getPreco();
 	}
 
 	@Override
