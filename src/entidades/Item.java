@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Item implements Comparable<Item>{
@@ -24,7 +25,11 @@ public class Item implements Comparable<Item>{
 	public int compareTo(Item i) {
 		return this.getNome().compareTo(i.getNome());
 	}
-
+	
+	public int compareToPreco(Item i) {
+		return this.menorPreco().compareTo(i.menorPreco());
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -62,5 +67,14 @@ public class Item implements Comparable<Item>{
 		retorno += ">";
 		return retorno;
 	}
-
+	
+	public Double menorPreco() {
+		double d = Double.MAX_VALUE;
+		for (double x : precos.values()) {
+			if(x<d) {
+				d = x;
+			}
+		}
+		return d;
+	}
 }

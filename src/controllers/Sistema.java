@@ -1,9 +1,11 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import comparators.ComparadorNome;
+import comparators.ComparadorPreco;
 import entidades.Item;
 import entidades.ItemQI;
 import entidades.ItemQuilo;
@@ -18,8 +20,7 @@ public class Sistema {
 		itens = new HashMap<Integer, Item>();
 	}
 
-	public int adicionaItemPorQtd(String nome, String categoria, int quantidade, String unidade, String localDeCompra,
-			double preco) {
+	public int adicionaItemPorQtd(String nome, String categoria, int quantidade, String unidade, String localDeCompra,double preco) {
 		ItemQI item = new ItemQI(nome, categoria, id, quantidade, unidade);
 		item.addPreco(localDeCompra, preco);
 		itens.put(id, item);
@@ -124,11 +125,14 @@ public class Sistema {
 
 	}
 
-	public String getItem(Integer id) {
-		return itens.get(id).toString();
+	public String getItem(int id) {
+		ArrayList l = listaItens();
+		if(id< l.size())
+			return l.get(id).toString();
+		return"";
 	}
 
-	public String pesquisaItens() {
+	public ArrayList listaItens() {
 		String retorno = "";
 		ArrayList<Item> itens2 = new ArrayList();
 		for (Item i : itens.values()) {
@@ -136,11 +140,17 @@ public class Sistema {
 		}
 		itens2.sort(new ComparadorNome());
 		retorno = itens2.toString();
-		return retorno;
+		return itens2;
 	}
-
-	public String getItemPorCategoria(String categoria) {
-		String retorno = "";
+	
+	public String getItemPorCategoria(String categoria, int id) {
+		ArrayList l = listaItemPorCategoria(categoria);
+		if(id< l.size())
+			return l.get(id).toString();
+		return"";
+	}
+	
+	public ArrayList listaItemPorCategoria(String categoria) {
 		ArrayList<Item> itens2 = new ArrayList();
 		for (Item i : itens.values()) {
 			if (i.getCategoria().equals(categoria)) {
@@ -148,16 +158,17 @@ public class Sistema {
 			}
 		}
 		itens2.sort(new ComparadorNome());
-		retorno = itens.toString();
-		return retorno;
+		return itens2;
 	}
 
-	public String getItemPorMenorPreco() {
-
-		return "";
+	public String getItemPorPesquisa(String p, int id) {
+		ArrayList l = listaItemPorPesquisa(p);
+		if(id< l.size())
+			return l.get(id).toString();
+		return"";
 	}
-
-	public String getItemPorPesquisa(String p) {
+	
+	public ArrayList listaItemPorPesquisa(String p) {
 		String pesquisa = p.toLowerCase();
 		String retorno = "";
 		ArrayList<Item> itens2 = new ArrayList();
@@ -165,7 +176,36 @@ public class Sistema {
 			if (i.toString().toLowerCase().contains(pesquisa))
 				itens2.add(i);
 		}
-		retorno = itens2.toString();
-		return retorno;
+		itens2.sort(new ComparadorNome());
+		return itens2;
 	}
+
+	public String getItemPorMenorPreco(int id) {
+		ArrayList<Item> l = listaItemPorMenorPreco();
+		if(id<l.size())
+			return l.get(id).toString();
+		return "";
+	}
+
+	public ArrayList listaItemPorMenorPreco() {
+		ArrayList<Item> itens2 = new ArrayList<Item>();
+		for (Item i : itens.values()) {
+			if(i.getPrecos().size()>0)
+				itens2.add(i);
+		}
+		itens2.sort(new ComparadorPreco());
+		return itens2;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 }

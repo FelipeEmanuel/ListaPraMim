@@ -43,33 +43,21 @@ public class Facade {
 	 * US - 2 Metodos para auxiliar testes.
 	 */
 
-	public String getItem(int posicao) {
-        String[] itens = listaItens().split(System.lineSeparator());
-        if (posicao < itens.length)
-            return itens[posicao];
-        return "";
-    }
 
-	public String getItemPorCategoria(String categoria, int posicao)
-            throws NullPointerException, IllegalArgumentException {
-        String[] itens = listaItens(categoria).split(System.lineSeparator());
-        if (posicao < itens.length)
-            return itens[posicao];
-        return "";
+	public String getItem(int posicao) {
+		return sistema.getItem(posicao);
+	}
+
+	public String getItemPorCategoria(String categoria, int posicao) {
+        return sistema.getItemPorCategoria(categoria, posicao);
 	}
 
 	public String getItemPorMenorPreco(int posicao) {
-        String[] itens = listaItensPreco().split(System.lineSeparator());
-        if (posicao < itens.length)
-            return itens[posicao];
-        return "";
+        return sistema.getItemPorMenorPreco(posicao);
     }
 
 	public String getItemPorPesquisa(String strPesquisada, int posicao) {
-        String[] itens = listaItensPesquisa(strPesquisada).split(System.lineSeparator());
-        if (posicao < itens.length)
-            return itens[posicao];
-        return "";
+        return sistema.getItemPorPesquisa(strPesquisada, posicao);
     }
 	
 	/*

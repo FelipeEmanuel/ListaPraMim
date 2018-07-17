@@ -12,6 +12,7 @@ public class Main {
 		
 		ArrayList<String> testes = new ArrayList<>();
 		testes.add("user_case" + File.separator + "use_case1.txt");
+		testes.add("user_case" + File.separator + "use_case1_exception.txt");
 		//testes.add("user_case" + File.separator + "use_case2.txt");
 		//testes.add("user_case" + File.separator + "use_case3.txt");
 		//testes.add("user_case" + File.separator + "use_case4.txt");

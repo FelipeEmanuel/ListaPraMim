@@ -7,6 +7,7 @@ public class ItemQuilo extends Item {
 	public ItemQuilo(String nome, String categoria, double kg, int id) {
 		super(nome, categoria, id);
 		this.kg = kg;
+		
 	}
 
 	@Override
