@@ -10,6 +10,7 @@ import entidades.Item;
 import entidades.ItemQI;
 import entidades.ItemQuilo;
 import entidades.ItemUnidade;
+import entidades.ValidaItem;
 
 public class Sistema {
 
@@ -19,23 +20,33 @@ public class Sistema {
 	public Sistema() {
 		itens = new HashMap<Integer, Item>();
 	}
-
+	
+	
 	public int adicionaItemPorQtd(String nome, String categoria, int quantidade, String unidade, String localDeCompra,double preco) {
+		ValidaItem.validaQTD(nome, categoria, quantidade, unidade, localDeCompra, preco);
 		ItemQI item = new ItemQI(nome, categoria, id, quantidade, unidade);
+		if(itens.containsValue(item))
+			throw new IllegalArgumentException("Erro no cadastro de item: item ja cadastrado no sistema.");
 		item.addPreco(localDeCompra, preco);
 		itens.put(id, item);
 		return id++;
 	}
 
 	public int adicionaItemPorQuilo(String nome, String categoria, double kg, String localDeCompra, double preco) {
+		ValidaItem.validaQuilo(nome, categoria, localDeCompra, preco, kg);
 		ItemQuilo item = new ItemQuilo(nome, categoria, kg, id);
+		if(itens.containsValue(item))
+			throw new IllegalArgumentException("Erro no cadastro de item: item ja cadastrado no sistema.");
 		item.addPreco(localDeCompra, preco);
 		itens.put(id, item);
 		return id++;
 	}
 
 	public int adicionaItemPorUnidade(String nome, String categoria, int unidade, String localDeCompra, double preco) {
+		ValidaItem.validaUnidade(nome, categoria, localDeCompra, preco, unidade);
 		ItemUnidade item = new ItemUnidade(nome, categoria, id, unidade);
+		if(itens.containsValue(item))
+			throw new IllegalArgumentException("Erro no cadastro de item: item ja cadastrado no sistema.");
 		item.addPreco(localDeCompra, preco);
 		itens.put(id, item);
 		return id++;
@@ -43,6 +54,8 @@ public class Sistema {
 	
 
 	public String exibeItem(int id) {
+		if (id <= 0)
+			throw new IllegalArgumentException("Erro na listagem de item: id invalido.");
 		if(!itens.containsKey(id))
 			throw new IllegalArgumentException("Erro na listagem de item: item nao existe.");
 		return itens.get(id).toString();
@@ -70,8 +83,11 @@ public class Sistema {
 		if (!itens.containsKey(id))
 			throw new IllegalArgumentException("Erro na atualizacao de item: item nao existe.");
 		
-		if	(atributo == null)
-			throw new IllegalArgumentException("Erro na atualizacao de item: " + atributo + " nao pode ser nulo.");
+		if	(atributo == null || atributo.isEmpty())
+			throw new IllegalArgumentException("Erro na atualizacao de item: atributo nao pode ser vazio ou nulo.");
+		
+		if	(valor == null || valor.isEmpty())
+			throw new IllegalArgumentException("Erro na atualizacao de item: novo valor de atributo nao pode ser vazio ou nulo.");
 		
 		switch (atributo.toLowerCase()) {
 		
@@ -80,12 +96,17 @@ public class Sistema {
 			break;
 			
 		case "categoria":
+			if(!valor.toLowerCase().equals("alimento industrializado") 
+					&& !valor.toLowerCase().equals("alimento nao industrializado")
+					&& !valor.toLowerCase().equals("higiene")
+					&& !valor.toLowerCase().equals("limpeza"))
+				throw new Error("Erro na atualizacao de item: categoria nao existe.");
 			itens.get(id).setCategoria(valor);
 			break;
 			
 		case "unidade de medida":
 			if(!itens.get(id).getClass().equals(new ItemQI("", "", 0, 0, "").getClass()))
-				throw new IllegalArgumentException("Item não possui unidade de medida");
+				throw new IllegalArgumentException("Item não possui unidade de medida.");
 			else {
 				ItemQI i = (ItemQI) itens.get(id);				
 				i.setUnidadeMedida(valor);
@@ -94,8 +115,10 @@ public class Sistema {
 			break;
 			
 		case "quantidade":
+			if(Double.parseDouble(valor) < 0)
+				throw new IllegalArgumentException("Erro na atualizacao de item: valor de quantidade nao pode ser menor que zero.");
 			if(!itens.get(id).getClass().equals(new ItemQI("", "", 0, 0, "").getClass()))
-				throw new IllegalArgumentException("Item não possui unidade de medida");
+				throw new IllegalArgumentException("Item não possui unidade de medida.");
 			else {
 				ItemQI i = (ItemQI) itens.get(id);				
 				i.setValorMedida(Integer.parseInt(valor));
@@ -103,9 +126,23 @@ public class Sistema {
 			}
 			break;
 			
+		case "unidade":
+			if(Double.parseDouble(valor) < 0)
+				throw new IllegalArgumentException("Erro na atualizacao de item: valor de unidade nao pode ser menor que zero.");
+			if(!itens.get(id).getClass().equals(new ItemUnidade("", "", 0, 0).getClass()))
+				throw new IllegalArgumentException("Item não possui unidade de medida.");
+			else {
+				ItemUnidade i = (ItemUnidade) itens.get(id);				
+				i.setUnidade(Integer.parseInt(valor));
+				itens.put(id, i);
+			}
+			break;
+			
 		case "kg":
+			if(Double.parseDouble(valor) < 0)
+				throw new IllegalArgumentException("Erro na atualizacao de item: valor de quilos nao pode ser menor que zero.");
 			if(!itens.get(id).getClass().equals(new ItemQuilo("", "", 0.0, 0).getClass()))
-				throw new IllegalArgumentException("Item não possui unidade de medida");
+				throw new IllegalArgumentException("Item não possui unidade de medida.");
 			else {
 				ItemQuilo i = (ItemQuilo) itens.get(id);				
 				i.setKg(Double.parseDouble(valor));
@@ -114,13 +151,21 @@ public class Sistema {
 			break;
 			
 		case "ID":
-			throw new IllegalArgumentException("Erro na atualizacao de item: ID não pode ser mudado");
+			throw new IllegalArgumentException("Erro na atualizacao de item: ID não pode ser mudado.");
 			
 		default:
-			throw new IllegalArgumentException("Erro na atualizacao de item: Atributo inexistente");
+			throw new IllegalArgumentException("Erro na atualizacao de item: atributo nao existe.");
 		}
 	}
 	public void adicionaPrecoItem(int id, String localDeCompra, double preco) {
+		if(id <= 0)
+			throw new IllegalArgumentException("Erro no cadastro de preco: id de item invalido.");
+		if(localDeCompra.isEmpty() || localDeCompra == null)
+			throw new IllegalArgumentException("Erro no cadastro de preco: local de compra nao pode ser vazio ou nulo.");
+		if(preco <= 0)
+			throw new IllegalArgumentException("Erro no cadastro de preco: preco de item invalido.");
+		if (!itens.containsKey(id))
+			throw new IllegalArgumentException("Erro no cadastro de preco: item nao existe.");
 		itens.get(id).addPreco(localDeCompra, preco);
 
 	}

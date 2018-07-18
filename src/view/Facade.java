@@ -65,8 +65,7 @@ public class Facade {
 	 */
 	
     public String listaItens() {
-		// TODO Auto-generated method stub
-		return null;
+			return null;
 	}
     
     public String listaItens(String categoria) {
