@@ -18,6 +18,10 @@ public class ItemUnidade extends Item {
 	public String toString() {
 		return getId() + ". " + getNome() + ", " + getCategoria() + ", "+ "Preco:" + getPreco();
 	}
+	
+	public String toStringCompra() {
+		return  getNome() + ", " + getCategoria();
+	}
 
 	@Override
 	public void addPreco(String supermercado, double preco) {

@@ -247,15 +247,8 @@ public class Sistema {
 		return itens2;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
+	public Item itemToLista(int id) {
+		return itens.get(id);
+	}
+	
 }

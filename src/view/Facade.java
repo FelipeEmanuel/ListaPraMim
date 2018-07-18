@@ -1,12 +1,14 @@
 package view;
 
+import controllers.ListaController;
 import controllers.Sistema;
 
 public class Facade {
 	Sistema sistema;
-	
+	ListaController lista;
 	public Facade() {
 		sistema = new Sistema();
+		lista = new ListaController();
 	}
 	
 	//US1
@@ -65,7 +67,7 @@ public class Facade {
 	 */
 	
     public String listaItens() {
-			return null;
+		return null;
 	}
     
     public String listaItens(String categoria) {
@@ -78,9 +80,26 @@ public class Facade {
 		return null;
 	}
     
-	private String listaItensPesquisa(String strPesquisada) {
+	public String listaItensPesquisa(String strPesquisada) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/*
+	 * US3
+	 */
+	
+	public String adicionaListaDeCompras(String descritorLista) {
+		return lista.adicionaListaDeCompras(descritorLista);
+	}
+	
+	public String pesquisaListaDeCompras(String descritorLista) {
+		return lista.pesquisaListaDeCompras(descritorLista);
+	}
+	
+	public void adicionaCompraALista(String descritorLista, int quantidade, int id) {
+		lista.adicionaCompraALista(descritorLista, quantidade, sistema.itemToLista(id));
+	}
+	
 	
 }
