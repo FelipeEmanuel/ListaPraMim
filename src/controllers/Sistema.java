@@ -98,7 +98,7 @@ public class Sistema {
 		case "categoria":
 			if(!valor.toLowerCase().equals("alimento industrializado") 
 					&& !valor.toLowerCase().equals("alimento nao industrializado")
-					&& !valor.toLowerCase().equals("higiene")
+					&& !valor.toLowerCase().equals("higiene pessoal")
 					&& !valor.toLowerCase().equals("limpeza"))
 				throw new Error("Erro na atualizacao de item: categoria nao existe.");
 			itens.get(id).setCategoria(valor);
@@ -189,7 +189,12 @@ public class Sistema {
 	}
 	
 	public String getItemPorCategoria(String categoria, int id) {
-		ArrayList l = listaItemPorCategoria(categoria);
+		if(!categoria.toLowerCase().equals("alimento industrializado") 
+				&& !categoria.toLowerCase().equals("alimento nao industrializado")
+				&& !categoria.toLowerCase().equals("higiene pessoal")
+				&& !categoria.toLowerCase().equals("limpeza"))
+			throw new Error("Erro na listagem de item: categoria nao existe.");
+		ArrayList l = listaItemPorCategoria(categoria);		
 		if(id< l.size())
 			return l.get(id).toString();
 		return"";

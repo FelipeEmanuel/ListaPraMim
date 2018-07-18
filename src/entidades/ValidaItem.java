@@ -9,7 +9,7 @@ public class ValidaItem {
 			throw new Error("Erro no cadastro de item: categoria nao pode ser vazia ou nula.");
 		if(!categoria.toLowerCase().equals("alimento industrializado") 
 				&& !categoria.toLowerCase().equals("alimento nao industrializado")
-				&& !categoria.toLowerCase().equals("higiene")
+				&& !categoria.toLowerCase().equals("higiene pessoal")
 				&& !categoria.toLowerCase().equals("limpeza"))
 			throw new Error("Erro no cadastro de item: categoria nao existe.");
 		if(localDeCompra.isEmpty() || localDeCompra.equals(null))
