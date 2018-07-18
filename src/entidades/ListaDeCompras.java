@@ -7,6 +7,7 @@ public class ListaDeCompras {
 	
 	private String descricao;
 	private String localDeCompra;
+	private double valorCompra;
 	private HashSet<Compra> compras;
 	private Calendar data;
 
@@ -46,6 +47,16 @@ public class ListaDeCompras {
 
 	public void setLocalDeCompra(String localDeCompra) {
 		this.localDeCompra = localDeCompra;
+	}
+
+	
+	public double getValorCompra() {
+		return valorCompra;
+	}
+
+	
+	public void setValorCompra(double valorCompra) {
+		this.valorCompra = valorCompra;
 	}
 
 	
@@ -92,7 +103,32 @@ public class ListaDeCompras {
 	}
 	
 	public String pesquisaCompraEmLista(int id) {
-		
+		for (Compra c: compras) {
+			if(c.getItem().getId() == id)
+				return c.toString();
+		}
+		return "";
 	}
 	
+	public void addQuantidade(int id, int quantidade) {
+		for (Compra c: compras) {
+			if(c.getItem().getId() == id)
+				c.adicionaQuantidade(quantidade);
+		}
+	}
+	
+	public void diminuiQuantidade(int id, int quantidade) {
+		for (Compra c: compras) {
+			if(c.getItem().getId() == id)
+				c.diminuiQuantidade(quantidade);
+			if(c.getQuantidade()==0)
+				compras.remove(c);
+		}
+	}
+	
+	public void finalizarListaDeCompras(String localDaCompra, double valorFinal) {
+		setLocalDeCompra(localDaCompra);
+		setValorCompra(valorFinal);
+	}
+
 }

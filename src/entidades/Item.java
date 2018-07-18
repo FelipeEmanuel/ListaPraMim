@@ -2,13 +2,12 @@ package entidades;
 
 import java.util.HashMap;
 
-public class Item implements Comparable<Item>{
+public abstract class Item implements Comparable<Item>{
 	
 	private String nome;
 	private String categoria;
 	private int id;
 	protected HashMap<String, Double> precos;
-	
 	
 	public Item(String nome, String categoria, int id) {
 		setNome(nome);
@@ -107,4 +106,6 @@ public class Item implements Comparable<Item>{
 			return false;
 		return true;
 	}
+	
+	public abstract String toStringCompra() ;
 }

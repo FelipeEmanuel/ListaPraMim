@@ -89,6 +89,9 @@ public class Facade {
 	 * US3
 	 */
 	
+	public String pesquisaCompraEmLista(String descritorLista, int id) {
+		return lista.pesquisaCompraEmLista(descritorLista, id);
+	}
 	public String adicionaListaDeCompras(String descritorLista) {
 		return lista.adicionaListaDeCompras(descritorLista);
 	}
@@ -101,5 +104,12 @@ public class Facade {
 		lista.adicionaCompraALista(descritorLista, quantidade, sistema.itemToLista(id));
 	}
 	
+	public void atualizaCompraDeLista(String descritorLista, int id, String operacao, int quantidade) {
+		lista.atualizaCompraDeLista(descritorLista, id, operacao, quantidade);
+	}
+	
+	public void finalizarListaDeCompras(String descritorLista, String localDeCompra, double valorCompra) {	
+		lista.finalizarListaDeCompras(descritorLista, localDeCompra, valorCompra);
+	}
 	
 }
