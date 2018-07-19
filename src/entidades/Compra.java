@@ -14,11 +14,11 @@ public class Compra {
 	}
 	
 	public void adicionaQuantidade(int plus) {
-		quantidade += plus;
+		this.quantidade += plus;
 	}
 	
 	public void diminuiQuantidade(int minus) {
-		quantidade -= minus;
+		quantidade += (-1*minus);
 	}
 	
 	public void setQuantidade(int quantidade) {

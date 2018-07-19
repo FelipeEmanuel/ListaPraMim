@@ -96,8 +96,9 @@ public class ListaController {
 			if(c.getItem().getId() == id) {
 				listas.get(descritorLista).deletaCompraDeLista(id);
 				maybe = false;
+				break;
 			}
-	}
+		}
 		if(maybe)
 			throw new IllegalArgumentException("Erro na exclusao de compra: compra nao encontrada na lista.");
 	}

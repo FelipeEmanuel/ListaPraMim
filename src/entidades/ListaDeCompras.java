@@ -122,12 +122,12 @@ public class ListaDeCompras {
 	}
 	
 	public void diminuiQuantidade(int id, int quantidade) {
-		int e = compras.size();
 		for (Compra c: compras) {
 			if(c.getItem().getId() == id) {
 				c.diminuiQuantidade(quantidade);
 				if(c.getQuantidade()<=0)
 					compras.remove(c);
+				break;
 			}
 		}
 	}
@@ -139,6 +139,8 @@ public class ListaDeCompras {
 	
 	public String getItemLista(int posicao) {
 		ArrayList<Item> itens = listaItens();
+		if(posicao >= itens.size())
+			return "";
 		int q = 0;
 		for(Compra c: compras) {
 			if(c.getItem().equals(itens.get(posicao))) {
@@ -203,8 +205,10 @@ public class ListaDeCompras {
 	
 	public void deletaCompraDeLista(int id) {
 		for(Compra c : compras) {
-			if(c.getItem().getId() == id)
+			if(c.getItem().getId() == id) {
 				compras.remove(c);
+				break;
+			}
 		}
 	}
 
