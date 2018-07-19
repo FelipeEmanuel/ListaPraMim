@@ -112,4 +112,11 @@ public class Facade {
 		lista.finalizarListaDeCompras(descritorLista, localDeCompra, valorCompra);
 	}
 	
+	public String getItemLista(String descritorLista, int posicao) {
+		return lista.getItemLista(descritorLista, posicao);
+	}
+	
+	public void deletaCompraDeLista(String descritorLista, int id) {
+		lista.deletaCompraDeLista(descritorLista, id);
+	}
 }

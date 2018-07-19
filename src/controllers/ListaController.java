@@ -47,4 +47,12 @@ public class ListaController {
 		listas.get(descritorLista).finalizarListaDeCompras(localDeCompra, valorCompra);
 	}
 	
+	public String getItemLista(String descritorLista, int posicao) {
+		return listas.get(descritorLista).getItemLista(posicao);
+	}
+	
+	public void deletaCompraDeLista(String descritorLista, int id) {
+		listas.get(descritorLista).deletaCompraDeLista(id);
+	}
+		
 }

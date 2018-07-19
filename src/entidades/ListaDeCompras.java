@@ -1,7 +1,10 @@
 package entidades;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+
+import comparators.ComparadorNome;
 
 public class ListaDeCompras {
 	
@@ -129,6 +132,77 @@ public class ListaDeCompras {
 	public void finalizarListaDeCompras(String localDaCompra, double valorFinal) {
 		setLocalDeCompra(localDaCompra);
 		setValorCompra(valorFinal);
+	}
+	
+	public String getItemLista(int posicao) {
+		ArrayList<Item> itens = listaItens();
+		int q = 0;
+		for(Compra c: compras) {
+			if(c.getItem().equals(itens.get(posicao))) {
+				q = c.getQuantidade();
+				return  q + " " + itens.get(posicao).toStringCompra();
+			}
+		}
+		return "";
+	}
+	
+	public ArrayList listaItens() {
+		
+		ArrayList<Item> itens = new ArrayList<Item>(),itens2 = new ArrayList<Item>();
+		
+		for(Compra c : compras) {
+			if(c.getItem().getCategoria().equals("higiene pessoal")) {
+				itens2.add(c.getItem());
+			}
+		}
+		itens2.sort(new ComparadorNome());
+		for(Item i : itens2) {
+			itens.add(i);
+		}		
+		itens2.clear();
+		
+		for(Compra c : compras) {
+			if(c.getItem().getCategoria().equals("limpeza")) {
+				itens2.add(c.getItem());
+			}
+		}
+		itens2.sort(new ComparadorNome());
+		for(Item i : itens2) {
+			itens.add(i);
+		}
+		itens2.clear();
+		
+		for(Compra c : compras) {
+			if(c.getItem().getCategoria().equals("alimento industrializado")) {
+				itens2.add(c.getItem());
+			}
+		}
+		itens2.sort(new ComparadorNome());
+		for(Item i : itens2) {
+			itens.add(i);
+		}
+		itens2.clear();
+		
+		for(Compra c : compras) {
+			if(c.getItem().getCategoria().equals("alimento nao industrializado")) {
+				itens2.add(c.getItem());
+			}
+		}
+		
+		itens2.sort(new ComparadorNome());
+		for(Item i : itens2) {
+			itens.add(i);
+		}
+		itens2.clear();
+		
+		return itens;
+	}
+	
+	public void deletaCompraDeLista(int id) {
+		for(Compra c : compras) {
+			if(c.getItem().getId() == id)
+				compras.remove(c);
+		}
 	}
 
 }
