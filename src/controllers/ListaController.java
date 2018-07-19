@@ -19,6 +19,8 @@ public class ListaController {
 	
 	
 	public String adicionaListaDeCompras(String descritorLista) {
+		if (descritorLista.trim().isEmpty() || descritorLista == null)
+			throw new IllegalArgumentException("Erro na criacao de lista de compras: descritor nao pode ser vazio ou nulo.");
 		listas.put(descritorLista, new ListaDeCompras(descritorLista));
 		return descritorLista;
 	}

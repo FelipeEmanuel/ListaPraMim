@@ -89,8 +89,8 @@ public class Facade {
 	 * US3
 	 */
 	
-	public String pesquisaCompraEmLista(String descritorLista, int id) {
-		return lista.pesquisaCompraEmLista(descritorLista, id);
+	public String pesquisaCompraEmLista(String descritorLista, Item item) {
+		return lista.pesquisaCompraEmLista(descritorLista, item);
 	}
 	public String adicionaListaDeCompras(String descritorLista) {
 		return lista.adicionaListaDeCompras(descritorLista);
