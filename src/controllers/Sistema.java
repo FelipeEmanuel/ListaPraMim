@@ -248,7 +248,22 @@ public class Sistema {
 	}
 
 	public Item itemToLista(int id) {
-		return itens.get(id);
+		for (Item i : itens.values()) {
+			if (i.getId() == id)
+				return itens.get(id);	
+		}
+			throw new IllegalArgumentException("Erro na compra de item: item nao existe no sistema.");
+		
+	}
+
+
+	public HashMap<Integer, Item> getItens() {
+		return itens;
+	}
+
+
+	public void setItens(HashMap<Integer, Item> itens) {
+		this.itens = itens;
 	}
 	
 }
