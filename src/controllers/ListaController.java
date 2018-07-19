@@ -27,6 +27,10 @@ public class ListaController {
 	}
 	
 	public String pesquisaListaDeCompras(String descritorLista) {
+		if (descritorLista.trim().isEmpty() || descritorLista == null)
+			throw new IllegalArgumentException("Erro na pesquisa de compra: descritor nao pode ser vazio ou nulo.");
+		if (!listas.containsKey(descritorLista))
+			throw new IllegalArgumentException("Erro na pesquisa de compra: lista de compras nao existe.");		
 		return listas.get(descritorLista).toString();
 	}
 	
