@@ -75,6 +75,12 @@ public class ListaController {
 	}
 	
 	public void finalizarListaDeCompras(String descritorLista, String localDeCompra, double valorCompra) {
+		if (descritorLista.trim().isEmpty() || descritorLista == null)
+			throw new IllegalArgumentException("Erro na finalizacao de lista de compras: descritor nao pode ser vazio ou nulo.");
+		if (localDeCompra.trim().isEmpty() || localDeCompra == null)
+			throw new IllegalArgumentException("Erro na finalizacao de lista de compras: local nao pode ser vazio ou nulo.");
+		if (valorCompra <= 0)
+			throw new IllegalArgumentException("Erro na finalizacao de lista de compras: valor final da lista invalido.");
 		listas.get(descritorLista).finalizarListaDeCompras(localDeCompra, valorCompra);
 	}
 	
