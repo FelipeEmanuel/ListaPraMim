@@ -1,24 +1,25 @@
 package entidades;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.ConcurrentModificationException;
+import java.util.Date;
 import java.util.HashSet;
 
 import comparators.ComparadorNome;
 
-public class ListaDeCompras {
+public class ListaDeCompras implements Comparable<ListaDeCompras> {
 	
 	private String descricao;
 	private String localDeCompra;
 	private double valorCompra;
 	private HashSet<Compra> compras;
-	private Calendar data;
+	private Date data;
 
 	public ListaDeCompras(String descricao) {
 		setDescricao(descricao);
 		compras = new HashSet<Compra>();
-		data = Calendar.getInstance();
+		data = new Date();
 	}
 
 	public void addItem(int quantidade, Item item) {
@@ -41,10 +42,16 @@ public class ListaDeCompras {
 		this.compras = compras;
 	}
 
-	public Calendar getData() {
+	public Date getData() {
 		return data;
 	}
+	
+	public String  dataString() {
+		String date = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(getData());
+		return date;
+	}
 
+	
 	public String getLocalDeCompra() {
 		return localDeCompra;
 	}
@@ -63,6 +70,12 @@ public class ListaDeCompras {
 		this.valorCompra = valorCompra;
 	}
 
+	
+	
+	@Override
+	public int compareTo(ListaDeCompras l) {
+		return this.getDescricao().compareTo(l.getDescricao());
+	}
 	
 	@Override
 	public int hashCode() {

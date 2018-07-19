@@ -1,7 +1,12 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
+import comparators.ComparadorLista;
+import comparators.ComparadorNome;
 import entidades.Compra;
 import entidades.Item;
 import entidades.ListaDeCompras;
@@ -105,6 +110,22 @@ public class ListaController {
 		}
 		if(maybe)
 			throw new IllegalArgumentException("Erro na exclusao de compra: compra nao encontrada na lista.");
+	}
+	
+	public String getItemListaPorData(String data, int posicao) {
+		ArrayList<ListaDeCompras> listaData = listaPorData(data);
+		if(posicao >= listaData.size())
+			throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
+		return listaData.get(posicao).getDescricao();
+	}
+	public ArrayList<ListaDeCompras> listaPorData(String data) {
+		ArrayList<ListaDeCompras> listaData = new ArrayList<ListaDeCompras>();
+		for(ListaDeCompras l : listas.values()) {
+			if(data.equals(l.dataString()))
+				listaData.add(l);
+		}
+		listaData.sort(new ComparadorLista());
+		return listaData;
 	}
 		
 }

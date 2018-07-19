@@ -1,5 +1,8 @@
 package view;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import controllers.ListaController;
 import controllers.Sistema;
 
@@ -121,4 +124,19 @@ public class Facade {
 			throw new IllegalArgumentException("Erro na exclusao de compra: item nao existe no sistema.");
 		lista.deletaCompraDeLista(descritorLista, id);
 	}
+	
+	/**
+	 *  US4
+	 */
+	
+	public String dataAtual() {
+		String data = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date());
+		return data;
+	}
+	public String getItemListaPorData(String data, int posicao) {
+		return lista.getItemListaPorData(data, posicao);
+	}
+	
+	
+	
 }
