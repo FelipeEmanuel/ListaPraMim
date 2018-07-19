@@ -2,6 +2,7 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 
 import comparators.ComparadorNome;
@@ -110,7 +111,7 @@ public class ListaDeCompras {
 			if(c.getItem().getId() == id)
 				return c.toString();
 		}
-		return "";
+		throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
 	}
 	
 	public void addQuantidade(int id, int quantidade) {
@@ -121,11 +122,13 @@ public class ListaDeCompras {
 	}
 	
 	public void diminuiQuantidade(int id, int quantidade) {
+		int e = compras.size();
 		for (Compra c: compras) {
-			if(c.getItem().getId() == id)
+			if(c.getItem().getId() == id) {
 				c.diminuiQuantidade(quantidade);
-			if(c.getQuantidade()==0)
-				compras.remove(c);
+				if(c.getQuantidade()<=0)
+					compras.remove(c);
+			}
 		}
 	}
 	
@@ -146,7 +149,7 @@ public class ListaDeCompras {
 		return "";
 	}
 	
-	public ArrayList listaItens() {
+	public ArrayList<Item> listaItens() {
 		
 		ArrayList<Item> itens = new ArrayList<Item>(),itens2 = new ArrayList<Item>();
 		

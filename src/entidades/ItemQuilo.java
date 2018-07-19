@@ -16,7 +16,7 @@ public class ItemQuilo extends Item {
 	}
 	
 	public String toStringCompra() {
-		return getNome() + ", " + getCategoria() + ", " + getKg();
+		return getNome() + ", " + getCategoria();
 	}
 
 	@Override
