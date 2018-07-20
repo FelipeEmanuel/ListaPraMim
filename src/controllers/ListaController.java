@@ -127,5 +127,23 @@ public class ListaController {
 		listaData.sort(new ComparadorLista());
 		return listaData;
 	}
+	
+	public String getItemListaPorItem(int id, int posicao) {
+		ArrayList<ListaDeCompras> lista = listaItemListaPorItem(id);
+		return lista.get(posicao).dataString() + " - " + lista.get(posicao).getDescricao();
+	}
+	
+	public ArrayList<ListaDeCompras> listaItemListaPorItem(int id) {
+		ArrayList<ListaDeCompras> lista = new ArrayList<ListaDeCompras>();
+		for(ListaDeCompras l : listas.values()) {
+			for(Compra c: l.getCompras())
+				if(c.getItem().getId() == id) {
+					lista.add(l);
+					break;
+				}
+		}
+		lista.sort(new ComparadorLista());
+		return lista;
+	}
 		
 }

@@ -137,6 +137,8 @@ public class Facade {
 		return lista.getItemListaPorData(data, posicao);
 	}
 	
-	
+	public String getItemListaPorItem(int id, int posicao) {
+		return lista.getItemListaPorItem(id, posicao);
+	}
 	
 }
