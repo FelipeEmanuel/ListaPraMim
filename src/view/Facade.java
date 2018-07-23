@@ -3,19 +3,11 @@ package view;
 import java.text.DateFormat;
 import java.util.Date;
 
-import controllers.ListaController;
 import controllers.Sistema;
 
 public class Facade {
-	Sistema sistema;
-	ListaController lista;
-	public Facade() {
-		sistema = new Sistema();
-		lista = new ListaController();
-	}
+	Sistema sistema = new Sistema();
 	
-	//US1
-		
 	public int adicionaItemPorQtd(String nome, String categoria, int quantidade, String unidade, String localDeCompra, double preco) {
 		return sistema.adicionaItemPorQtd(nome, categoria, quantidade, unidade, localDeCompra, preco);
 	}
@@ -93,36 +85,34 @@ public class Facade {
 	 */
 	
 	public String pesquisaCompraEmLista(String descritorLista, int id) {
-		return lista.pesquisaCompraEmLista(descritorLista, id);
+		return sistema.pesquisaCompraEmLista(descritorLista, id);
 	}
 	public String adicionaListaDeCompras(String descritorLista) {
-		return lista.adicionaListaDeCompras(descritorLista);
+		return sistema.adicionaListaDeCompras(descritorLista);
 	}
 	
 	public String pesquisaListaDeCompras(String descritorLista) {
-		return lista.pesquisaListaDeCompras(descritorLista);
+		return sistema.pesquisaListaDeCompras(descritorLista);
 	}
 	
 	public void adicionaCompraALista(String descritorLista, int quantidade, int id) {
-		lista.adicionaCompraALista(descritorLista, quantidade, sistema.itemToLista(id));
+		sistema.adicionaCompraALista(descritorLista, quantidade, id);
 	}
 	
 	public void atualizaCompraDeLista(String descritorLista, int id, String operacao, int quantidade) {
-		lista.atualizaCompraDeLista(descritorLista, id, operacao, quantidade);
+		sistema.atualizaCompraDeLista(descritorLista, id, operacao, quantidade);
 	}
 	
 	public void finalizarListaDeCompras(String descritorLista, String localDeCompra, double valorCompra) {	
-		lista.finalizarListaDeCompras(descritorLista, localDeCompra, valorCompra);
+		sistema.finalizarListaDeCompras(descritorLista, localDeCompra, valorCompra);
 	}
 	
 	public String getItemLista(String descritorLista, int posicao) {
-		return lista.getItemLista(descritorLista, posicao);
+		return sistema.getItemLista(descritorLista, posicao);
 	}
 	
 	public void deletaCompraDeLista(String descritorLista, int id) {
-		if(!sistema.getItens().containsKey(id))
-			throw new IllegalArgumentException("Erro na exclusao de compra: item nao existe no sistema.");
-		lista.deletaCompraDeLista(descritorLista, id);
+		sistema.deletaCompraDeLista(descritorLista, id);
 	}
 	
 	/**
@@ -130,15 +120,14 @@ public class Facade {
 	 */
 	
 	public String dataAtual() {
-		String data = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date());
-		return data;
+		return sistema.dataAtual();
 	}
 	public String getItemListaPorData(String data, int posicao) {
-		return lista.getItemListaPorData(data, posicao);
+		return sistema.getItemListaPorData(data, posicao);
 	}
 	
 	public String getItemListaPorItem(int id, int posicao) {
-		return lista.getItemListaPorItem(id, posicao);
+		return sistema.getItemListaPorItem(id, posicao);
 	}
 	
 }

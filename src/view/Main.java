@@ -3,7 +3,7 @@ package view;
 import java.io.File;
 import java.util.ArrayList;
 
-import controllers.Sistema;
+import controllers.ItemController;
 import easyaccept.EasyAccept;
 
 public class Main {
