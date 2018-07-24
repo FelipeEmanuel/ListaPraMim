@@ -113,12 +113,12 @@ public class ListaController {
 	}
 	
 	public String getItemListaPorData(String data, int posicao) {
-		ArrayList<ListaDeCompras> listaData = listaPorData(data);
+		ArrayList<ListaDeCompras> listaData = pesquisaListaPorData(data);
 		if(posicao >= listaData.size())
 			throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
 		return listaData.get(posicao).getDescricao();
 	}
-	public ArrayList<ListaDeCompras> listaPorData(String data) {
+	public ArrayList<ListaDeCompras> pesquisaListaPorData(String data) {
 		ArrayList<ListaDeCompras> listaData = new ArrayList<ListaDeCompras>();
 		for(ListaDeCompras l : listas.values()) {
 			if(data.equals(l.dataString()))
@@ -129,11 +129,11 @@ public class ListaController {
 	}
 	
 	public String getItemListaPorItem(int id, int posicao) {
-		ArrayList<ListaDeCompras> lista = listaItemListaPorItem(id);
+		ArrayList<ListaDeCompras> lista = pesquisaItemListaPorItem(id);
 		return lista.get(posicao).dataString() + " - " + lista.get(posicao).getDescricao();
 	}
 	
-	public ArrayList<ListaDeCompras> listaItemListaPorItem(int id) {
+	public ArrayList<ListaDeCompras> pesquisaItemListaPorItem(int id) {
 		ArrayList<ListaDeCompras> lista = new ArrayList<ListaDeCompras>();
 		for(ListaDeCompras l : listas.values()) {
 			for(Compra c: l.getCompras())
