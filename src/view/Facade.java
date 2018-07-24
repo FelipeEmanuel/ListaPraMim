@@ -130,4 +130,11 @@ public class Facade {
 		return sistema.getItemListaPorItem(id, posicao);
 	}
 	
+	public void pesquisaListasDeComprasPorData(String data) {
+		sistema.pesquisaListaDeComprasPorData(data);
+	}
+	
+	public void pesquisaListasDeComprasPorItem(int id) {
+		sistema.pesquisaListasDeComprasPorItem(id);
+	}
 }

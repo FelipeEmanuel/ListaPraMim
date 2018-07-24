@@ -138,4 +138,11 @@ public class Sistema {
 		return lista.getItemListaPorItem(id, posicao);
 	}
 	
+	public void pesquisaListaDeComprasPorData(String data) {
+		lista.pesquisaListaPorData(data);
+	}
+	
+	public void pesquisaListasDeComprasPorItem(int id) {
+		lista.pesquisaItemListaPorItem(id);
+	}
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -119,11 +120,15 @@ public class ListaController {
 		return listaData.get(posicao).getDescricao();
 	}
 	public ArrayList<ListaDeCompras> pesquisaListaPorData(String data) {
+		if (!data.equals(java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date())) && !(data.isEmpty() || data == null))
+			throw new IllegalArgumentException("Erro na pesquisa de compra: data em formato invalido, tente dd/MM/yyyy");
 		ArrayList<ListaDeCompras> listaData = new ArrayList<ListaDeCompras>();
 		for(ListaDeCompras l : listas.values()) {
 			if(data.equals(l.dataString()))
 				listaData.add(l);
-		}
+			}
+		if (listaData.isEmpty() || listaData == null)
+			throw new IllegalArgumentException("Erro na pesquisa de compra: data nao pode ser vazia ou nula.");
 		listaData.sort(new ComparadorLista());
 		return listaData;
 	}
@@ -140,10 +145,14 @@ public class ListaController {
 				if(c.getItem().getId() == id) {
 					lista.add(l);
 					break;
-				}
+				}			
 		}
+		if(lista.isEmpty())
+			throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
 		lista.sort(new ComparadorLista());
 		return lista;
 	}
+	
+	
 		
 }
