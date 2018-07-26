@@ -146,6 +146,8 @@ public class Facade {
 		return sistema.geraAutomaticaUltimaLista();
 	}
 	
-	
+	public String geraAutomaticaItem(String descritorItem) {
+		return sistema.geraAutomaticaItem(descritorItem);
+	}
 	
 }

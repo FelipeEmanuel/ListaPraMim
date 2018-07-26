@@ -3,6 +3,8 @@ package controllers;
 import java.text.DateFormat;
 import java.util.Date;
 
+import entidades.Item;
+
 public class Sistema {
 	ItemController sistema;
 	ListaController lista;
@@ -154,6 +156,16 @@ public class Sistema {
 		return lista.geraAutomaticaUltimaLista();
 	}
 	
+	public String geraAutomaticaItem(String descritorItem) {
+		int ix = 0;
+		for(Item i : sistema.getItens().values()) {
+			if(i.getNome().equals(descritorItem)) {
+				ix = i.getId();
+				break;
+			}
+		}
+		return lista.geraAutomaticaItem(sistema.getItens().get(ix));
+	}
 	
 	
 }

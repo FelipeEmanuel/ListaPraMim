@@ -160,7 +160,7 @@ public class ListaController {
 		listas.put(l.getDescricao(),l);
 		contLista++;
 		return l.getDescricao();
-	}
+	}	
 	
 	public ListaDeCompras autoLista() {
 		String sx = "";
@@ -173,5 +173,28 @@ public class ListaController {
 		}
 		return listas.get(sx);
 	}
-		
+
+	public String geraAutomaticaItem(Item item) {
+		ListaDeCompras l = autoListaItem(item);
+		l.setDescricao("Lista automatica " + contLista + " " + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
+		listas.put(l.getDescricao(),l);
+		contLista++;
+		return l.getDescricao();
+	}
+	
+	
+	public ListaDeCompras autoListaItem(Item item) {
+		long x = 0;
+		String sx = "";
+		for(String s : listas.keySet()) {
+			if(listas.get(s).getHora()>x && listas.get(s).getCompras().contains(item)) {				
+				x = listas.get(s).getHora();
+				sx = s;
+			}
+		}
+		return listas.get(sx);
+	}
+	
+	
+	
 }
