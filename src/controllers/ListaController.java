@@ -15,6 +15,7 @@ import entidades.ListaDeCompras;
 public class ListaController {
 	
 	private HashMap<String,ListaDeCompras> listas;
+	private int contLista = 1 ;
 	
 	public ListaController() {
 		listas = new HashMap<String,ListaDeCompras>();
@@ -153,6 +154,24 @@ public class ListaController {
 		return lista;
 	}
 	
+	public String geraAutomaticaUltimaLista() {
+		ListaDeCompras l = autoLista();
+		l.setDescricao("Lista automatica " + contLista + " " + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
+		listas.put(l.getDescricao(),l);
+		contLista++;
+		return l.getDescricao();
+	}
 	
+	public ListaDeCompras autoLista() {
+		String sx = "";
+		long x = 0;
+		for(String s : listas.keySet()) {
+			if(listas.get(s).getHora()>x) {				
+				x = listas.get(s).getHora();
+				sx = s;
+			}
+		}
+		return listas.get(sx);
+	}
 		
 }

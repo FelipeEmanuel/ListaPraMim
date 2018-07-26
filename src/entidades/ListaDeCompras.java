@@ -15,11 +15,13 @@ public class ListaDeCompras implements Comparable<ListaDeCompras> {
 	private double valorCompra;
 	private HashSet<Compra> compras;
 	private Date data;
+	private long  hora;
 
 	public ListaDeCompras(String descricao) {
 		setDescricao(descricao);
 		compras = new HashSet<Compra>();
 		data = new Date();
+		hora = System.currentTimeMillis();
 	}
 
 	public void addItem(int quantidade, Item item) {
@@ -72,6 +74,10 @@ public class ListaDeCompras implements Comparable<ListaDeCompras> {
 
 	
 	
+	public long getHora() {
+		return hora;
+	}
+
 	@Override
 	public int compareTo(ListaDeCompras l) {
 		return this.getDescricao().compareTo(l.getDescricao());

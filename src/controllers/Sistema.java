@@ -145,4 +145,15 @@ public class Sistema {
 	public void pesquisaListasDeComprasPorItem(int id) {
 		lista.pesquisaItemListaPorItem(id);
 	}
+	
+	/**
+	 * US5
+	 */
+	
+	public String geraAutomaticaUltimaLista() {
+		return lista.geraAutomaticaUltimaLista();
+	}
+	
+	
+	
 }

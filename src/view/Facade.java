@@ -137,4 +137,15 @@ public class Facade {
 	public void pesquisaListasDeComprasPorItem(int id) {
 		sistema.pesquisaListasDeComprasPorItem(id);
 	}
+	
+	/**
+	 * US5
+	 */
+	
+	public String geraAutomaticaUltimaLista(){
+		return sistema.geraAutomaticaUltimaLista();
+	}
+	
+	
+	
 }
