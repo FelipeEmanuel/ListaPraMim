@@ -25,6 +25,8 @@ public class ItemQI extends Item {
 		return getNome() + ", " + getCategoria() + ", " + getValorMedida() + " " + getUnidadeMedida();
 	}
 	
+	
+	
 	@Override
 	public void addPreco(String supermercado, double preco) {
 		precos.put(supermercado, preco);

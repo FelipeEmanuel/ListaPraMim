@@ -63,7 +63,7 @@ public class ListaDeCompras implements Comparable<ListaDeCompras> {
 	}
 
 	
-	public double getValorCompra() {
+	public Double getValorCompra() {
 		return valorCompra;
 	}
 
@@ -77,7 +77,20 @@ public class ListaDeCompras implements Comparable<ListaDeCompras> {
 	public long getHora() {
 		return hora;
 	}
-
+	
+	public String itemString(Item item){
+		for(Compra c: compras) {
+			if(c.getItem().equals(item)){
+				return "- " + c.getQuantidade()  + " " + c.getItem().toStringCompra();
+			}
+		}
+		return null;
+	}
+	
+	public int compareToPreco(ListaDeCompras l) {
+		return this.getValorCompra().compareTo(l.getValorCompra());
+	}
+	
 	@Override
 	public int compareTo(ListaDeCompras l) {
 		return this.getDescricao().compareTo(l.getDescricao());
@@ -114,7 +127,6 @@ public class ListaDeCompras implements Comparable<ListaDeCompras> {
 			return false;
 		return true;
 	}
-
 	
 	@Override
 	public String toString() {
@@ -129,6 +141,14 @@ public class ListaDeCompras implements Comparable<ListaDeCompras> {
 		for (Compra c: compras) {
 			if(c.getItem().getId() == id)
 				return c.toString();
+		}
+		throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
+	}
+	
+	public Compra pesquisaItemCompraEmLista(int id) {
+		for (Compra c: compras) {
+			if(c.getItem().getId() == id)
+				return c;
 		}
 		throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
 	}

@@ -18,7 +18,7 @@ public class ItemQuilo extends Item {
 	public String toStringCompra() {
 		return getNome() + ", " + getCategoria();
 	}
-
+	
 	@Override
 	public void addPreco(String supermercado, double preco) {
 		precos.put(supermercado, preco);

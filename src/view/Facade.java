@@ -150,4 +150,19 @@ public class Facade {
 		return sistema.geraAutomaticaItem(descritorItem);
 	}
 	
+	public String geraAutomaticaItensMaisPresentes() {
+		return sistema.geraAutomaticaItensMaisPresentes();
+	}
+	
+	/**
+	 * US6
+	 */
+	
+	public String sugereMelhorEstabelecimento(String descritorLista, int posEstabelecimento, int posLista){
+		return sistema.sugereMelhorEstabelecimento(descritorLista, posEstabelecimento, posLista);
+	}
+	
+	
+	
+	
 }

@@ -1,9 +1,14 @@
 package controllers;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
+import comparators.ComparadorListaPrecoFinal;
+import entidades.Compra;
 import entidades.Item;
+import entidades.ListaDeCompras;
 
 public class Sistema {
 	ItemController sistema;
@@ -157,7 +162,7 @@ public class Sistema {
 	}
 	
 	public String geraAutomaticaItem(String descritorItem) {
-		int ix = 0;
+		int ix = 1;
 		for(Item i : sistema.getItens().values()) {
 			if(i.getNome().equals(descritorItem)) {
 				ix = i.getId();
@@ -165,6 +170,76 @@ public class Sistema {
 			}
 		}
 		return lista.geraAutomaticaItem(sistema.getItens().get(ix));
+	}
+	
+	public String geraAutomaticaItensMaisPresentes() {
+		ListaDeCompras list = new ListaDeCompras(null);
+		for(Item i: sistema.getItens().values()) {
+			int cont = 0;
+			int quantidades = 0;
+			for(ListaDeCompras l : lista.getListas().values()) {
+				if(l.listaItens().contains(i)) {
+					cont++;
+					quantidades+= l.pesquisaItemCompraEmLista(i.getId()).getQuantidade();
+				}
+			};
+			if(cont>= (lista.getListas().size()/2)) {
+				list.addItem((int)Math.floor(quantidades/cont), i);
+			}
+		}
+		list.setDescricao("Lista automatica 3 "  + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
+		lista.addLista(list);
+		return list.getDescricao();
+	}
+	
+	/*
+	 * US6
+	 */
+	
+	public String sugereMelhorEstabelecimento(String descritorLista, int posEstabelecimento, int posLista){
+		ArrayList<ListaDeCompras> list = pesquisaPrecoEstabelecimento(lista.getListas().get(descritorLista));	
+		if(posLista == 0) {
+			String s = String.format("%.5s",list.get(posEstabelecimento).getValorCompra().toString().replace(".",","));
+			return list.get(posEstabelecimento).getDescricao() + ": R$ " + (String) s;
+		}
+		if(posLista-1 >= list.get(posEstabelecimento).listaItens().size())
+			return "";
+		return list.get(posEstabelecimento).itemString(list.get(posEstabelecimento).listaItens().get(posLista-1));
+									
+	}
+	
+	public ArrayList<ListaDeCompras> pesquisaPrecoEstabelecimento(ListaDeCompras l){
+		HashMap<String, ListaDeCompras> list = new HashMap<String, ListaDeCompras>();
+		for(Compra c: l.getCompras()) {
+			for(Item i : sistema.getItens().values()) {
+				if(c.getItem().equals(i)) {
+					for(String s: i.getPrecos().keySet()) {
+						if(list.containsKey(s)) {
+							list.get(s).addItem(c.getQuantidade(), i);
+						}else {
+							list.put(s, new ListaDeCompras(s));
+							list.get(s).addItem(c.getQuantidade(), i);
+						}
+					}
+					break;
+				}
+			}
+		}
+		ArrayList<ListaDeCompras> lista2 = new  ArrayList<ListaDeCompras>();
+		for(ListaDeCompras lx: list.values()) {
+			double valor = 0;
+			for(Compra c: lx.getCompras()) {
+				for(String s : c.getItem().getPrecos().keySet()) {
+					if(lx.getDescricao().equals(s))
+						valor+= c.getQuantidade() * c.getItem().getPrecos().get(s).doubleValue();
+				}
+			}
+			lx.setValorCompra(valor);
+			lista2.add(lx);
+		}
+		lista2.sort(new ComparadorListaPrecoFinal());
+		
+		return lista2;
 	}
 	
 	

@@ -15,7 +15,6 @@ import entidades.ListaDeCompras;
 public class ListaController {
 	
 	private HashMap<String,ListaDeCompras> listas;
-	private int contLista = 1 ;
 	
 	public ListaController() {
 		listas = new HashMap<String,ListaDeCompras>();
@@ -156,9 +155,8 @@ public class ListaController {
 	
 	public String geraAutomaticaUltimaLista() {
 		ListaDeCompras l = autoLista();
-		l.setDescricao("Lista automatica " + contLista + " " + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
+		l.setDescricao("Lista automatica 1 "  + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
 		listas.put(l.getDescricao(),l);
-		contLista++;
 		return l.getDescricao();
 	}	
 	
@@ -175,10 +173,10 @@ public class ListaController {
 	}
 
 	public String geraAutomaticaItem(Item item) {
-		ListaDeCompras l = autoListaItem(item);
-		l.setDescricao("Lista automatica " + contLista + " " + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
+		ListaDeCompras l = new ListaDeCompras(null);
+		l.setDescricao("Lista automatica 2 "  + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
+		l.setCompras(autoListaItem(item).getCompras());
 		listas.put(l.getDescricao(),l);
-		contLista++;
 		return l.getDescricao();
 	}
 	
@@ -187,14 +185,22 @@ public class ListaController {
 		long x = 0;
 		String sx = "";
 		for(String s : listas.keySet()) {
-			if(listas.get(s).getHora()>x && listas.get(s).getCompras().contains(item)) {				
+			if(listas.get(s).getHora()>x && listas.get(s).toString().contains(item.getNome())) {				
 				x = listas.get(s).getHora();
 				sx = s;
 			}
 		}
+		if(sx.equals(""))
+			throw new IllegalArgumentException("Erro na geracao de lista automatica por item: nao ha compras cadastradas com o item desejado.");
 		return listas.get(sx);
 	}
+
+	public HashMap<String, ListaDeCompras> getListas() {
+		return listas;
+	}
 	
-	
+	public void addLista(ListaDeCompras l) {
+		listas.put(l.getDescricao(), l);
+	}
 	
 }
