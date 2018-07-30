@@ -164,5 +164,11 @@ public class Facade {
 	
 	
 	
+	public void iniciaSistema() {
+		sistema.iniciaSistema();
+	}
 	
+	public void fechaSistema() {
+		sistema.fechaSistema();
+	}
 }

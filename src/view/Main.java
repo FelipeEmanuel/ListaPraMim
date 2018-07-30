@@ -21,6 +21,8 @@ public class Main {
 		testes.add("user_case" + File.separator + "use_case4_exception.txt");
 		testes.add("user_case" + File.separator + "use_case5.txt");
 		testes.add("user_case" + File.separator + "use_case6.txt");
+		testes.add("user_case" + File.separator + "use_case6_exception.txt");
+		testes.add("user_case" + File.separator + "use_case7.txt");
 
 		
 		

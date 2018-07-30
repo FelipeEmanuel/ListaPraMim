@@ -1,5 +1,6 @@
 package entidades;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,7 +9,7 @@ import java.util.HashSet;
 
 import comparators.ComparadorNome;
 
-public class ListaDeCompras implements Comparable<ListaDeCompras> {
+public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 	
 	private String descricao;
 	private String localDeCompra;

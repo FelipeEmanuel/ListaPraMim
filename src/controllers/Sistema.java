@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import comparators.ComparadorLista;
 import comparators.ComparadorListaPrecoFinal;
 import entidades.Compra;
 import entidades.Item;
 import entidades.ListaDeCompras;
+import entidades.SerializeSistema;
 
 public class Sistema {
 	ItemController sistema;
@@ -137,20 +139,25 @@ public class Sistema {
 		String data = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date());
 		return data;
 	}
+	
 	public String getItemListaPorData(String data, int posicao) {
-		return lista.getItemListaPorData(data, posicao);
+		ArrayList<ListaDeCompras> listaData = pesquisaListaDeComprasPorData(data);
+		if(posicao >= listaData.size())
+			throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
+		return listaData.get(posicao).getDescricao();
+	}
+	
+	public ArrayList<ListaDeCompras> pesquisaListaDeComprasPorData(String data) {
+		return lista.pesquisaListaPorData(data);
 	}
 	
 	public String getItemListaPorItem(int id, int posicao) {
-		return lista.getItemListaPorItem(id, posicao);
+		ArrayList<ListaDeCompras> lista = pesquisaListasDeComprasPorItem(id);
+		return lista.get(posicao).dataString() + " - " + lista.get(posicao).getDescricao();
 	}
 	
-	public void pesquisaListaDeComprasPorData(String data) {
-		lista.pesquisaListaPorData(data);
-	}
-	
-	public void pesquisaListasDeComprasPorItem(int id) {
-		lista.pesquisaItemListaPorItem(id);
+	public ArrayList<ListaDeCompras> pesquisaListasDeComprasPorItem(int id) {
+		return lista.pesquisaItemListaPorItem(id);
 	}
 	
 	/**
@@ -197,9 +204,12 @@ public class Sistema {
 	 */
 	
 	public String sugereMelhorEstabelecimento(String descritorLista, int posEstabelecimento, int posLista){
-		ArrayList<ListaDeCompras> list = pesquisaPrecoEstabelecimento(lista.getListas().get(descritorLista));	
+		ArrayList<ListaDeCompras> list = pesquisaPrecoEstabelecimento(lista.getListas().get(descritorLista));
+		if(list.size() == 0) {
+			throw new IllegalArgumentException("Faltam dados para informar sobre preços em locais de compras.");
+		}
 		if(posLista == 0) {
-			String s = String.format("%.5s",list.get(posEstabelecimento).getValorCompra().toString().replace(".",","));
+			String s = String.format("%.2f",list.get(posEstabelecimento).getValorCompra()).replace(".",",");
 			return list.get(posEstabelecimento).getDescricao() + ": R$ " + (String) s;
 		}
 		if(posLista-1 >= list.get(posEstabelecimento).listaItens().size())
@@ -240,6 +250,21 @@ public class Sistema {
 		lista2.sort(new ComparadorListaPrecoFinal());
 		
 		return lista2;
+	}
+	
+	/**
+	 * US7
+	 */
+	
+	public void iniciaSistema() {
+		sistema.setItens(SerializeSistema.carregaItens());
+		lista.setListas(SerializeSistema.carregaListas());
+	}
+	
+	
+	public void fechaSistema() {
+		SerializeSistema.salvarItens(sistema.getItens());
+		SerializeSistema.salvarListas(lista.getListas());
 	}
 	
 	

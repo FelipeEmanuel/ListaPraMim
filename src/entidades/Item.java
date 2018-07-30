@@ -1,8 +1,9 @@
 package entidades;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public abstract class Item implements Comparable<Item>{
+public abstract class Item implements Comparable<Item>, Serializable{
 	
 	private String nome;
 	private String categoria;

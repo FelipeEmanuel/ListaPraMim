@@ -113,12 +113,6 @@ public class ListaController {
 			throw new IllegalArgumentException("Erro na exclusao de compra: compra nao encontrada na lista.");
 	}
 	
-	public String getItemListaPorData(String data, int posicao) {
-		ArrayList<ListaDeCompras> listaData = pesquisaListaPorData(data);
-		if(posicao >= listaData.size())
-			throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
-		return listaData.get(posicao).getDescricao();
-	}
 	public ArrayList<ListaDeCompras> pesquisaListaPorData(String data) {
 		if (!data.equals(java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date())) && !(data.isEmpty() || data == null))
 			throw new IllegalArgumentException("Erro na pesquisa de compra: data em formato invalido, tente dd/MM/yyyy");
@@ -133,10 +127,6 @@ public class ListaController {
 		return listaData;
 	}
 	
-	public String getItemListaPorItem(int id, int posicao) {
-		ArrayList<ListaDeCompras> lista = pesquisaItemListaPorItem(id);
-		return lista.get(posicao).dataString() + " - " + lista.get(posicao).getDescricao();
-	}
 	
 	public ArrayList<ListaDeCompras> pesquisaItemListaPorItem(int id) {
 		ArrayList<ListaDeCompras> lista = new ArrayList<ListaDeCompras>();
@@ -201,6 +191,10 @@ public class ListaController {
 	
 	public void addLista(ListaDeCompras l) {
 		listas.put(l.getDescricao(), l);
+	}
+
+	public void setListas(HashMap<String, ListaDeCompras> listas) {
+		this.listas = listas;
 	}
 	
 }
