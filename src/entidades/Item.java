@@ -3,6 +3,8 @@ package entidades;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import util.ValidaItem;
+
 public abstract class Item implements Comparable<Item>, Serializable{
 	
 	private String nome;

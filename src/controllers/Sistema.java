@@ -10,44 +10,46 @@ import comparators.ComparadorListaPrecoFinal;
 import entidades.Compra;
 import entidades.Item;
 import entidades.ListaDeCompras;
-import entidades.SerializeSistema;
+import persistencia.SerializeSistema;
 
 public class Sistema {
-	ItemController sistema;
-	ListaController lista;
+	ItemController itemController;
+	ListaController listaController;
 	public Sistema() {
-		sistema = new ItemController();
-		lista = new ListaController();
+		itemController = new ItemController();
+		listaController = new ListaController();
 	}
 	
-	//US1
+	/*
+	 * US1
+	 */
 		
 	public int adicionaItemPorQtd(String nome, String categoria, int quantidade, String unidade, String localDeCompra, double preco) {
-		return sistema.adicionaItemPorQtd(nome, categoria, quantidade, unidade, localDeCompra, preco);
+		return itemController.adicionaItemPorQtd(nome, categoria, quantidade, unidade, localDeCompra, preco);
 	}
 	
 	public int adicionaItemPorQuilo(String nome, String categoria, double kg, String localDeCompra, double preco) {
-		return sistema.adicionaItemPorQuilo(nome, categoria, kg, localDeCompra, preco);
+		return itemController.adicionaItemPorQuilo(nome, categoria, kg, localDeCompra, preco);
 	}
 	
 	public int adicionaItemPorUnidade(String nome, String categoria, int unidade, String localDeCompra, double preco) {
-		return sistema.adicionaItemPorUnidade(nome, categoria, unidade, localDeCompra, preco);
+		return itemController.adicionaItemPorUnidade(nome, categoria, unidade, localDeCompra, preco);
 	}
 	
 	public String exibeItem(int id) {
-		return sistema.exibeItem(id);
+		return itemController.exibeItem(id);
 	}
 	
 	public void deletaItem(int id){
-		sistema.deletaItem(id);
+		itemController.deletaItem(id);
 	}
 	
 	public void atualizaItem(int id,String atributo, String valor) {
-		sistema.atualizaItem(id, atributo, valor);
+		itemController.atualizaItem(id, atributo, valor);
 	}
 	
 	public void adicionaPrecoItem(int id, String localDeCompra, double preco) {
-		sistema.adicionaPrecoItem(id, localDeCompra, preco);
+		itemController.adicionaPrecoItem(id, localDeCompra, preco);
 	}
 	
 	/*
@@ -56,19 +58,19 @@ public class Sistema {
 
 
 	public String getItem(int posicao) {
-		return sistema.getItem(posicao);
+		return itemController.getItem(posicao);
 	}
 
 	public String getItemPorCategoria(String categoria, int posicao) {
-        return sistema.getItemPorCategoria(categoria, posicao);
+        return itemController.getItemPorCategoria(categoria, posicao);
 	}
 
 	public String getItemPorMenorPreco(int posicao) {
-        return sistema.getItemPorMenorPreco(posicao);
+        return itemController.getItemPorMenorPreco(posicao);
     }
 
 	public String getItemPorPesquisa(String strPesquisada, int posicao) {
-        return sistema.getItemPorPesquisa(strPesquisada, posicao);
+        return itemController.getItemPorPesquisa(strPesquisada, posicao);
     }
 	
 	/*
@@ -99,39 +101,39 @@ public class Sistema {
 	 */
 	
 	public String pesquisaCompraEmLista(String descritorLista, int id) {
-		return lista.pesquisaCompraEmLista(descritorLista, id);
+		return listaController.pesquisaCompraEmLista(descritorLista, id);
 	}
 	public String adicionaListaDeCompras(String descritorLista) {
-		return lista.adicionaListaDeCompras(descritorLista);
+		return listaController.adicionaListaDeCompras(descritorLista);
 	}
 	
 	public String pesquisaListaDeCompras(String descritorLista) {
-		return lista.pesquisaListaDeCompras(descritorLista);
+		return listaController.pesquisaListaDeCompras(descritorLista);
 	}
 	
 	public void adicionaCompraALista(String descritorLista, int quantidade, int id) {
-		lista.adicionaCompraALista(descritorLista, quantidade, sistema.itemToLista(id));
+		listaController.adicionaCompraALista(descritorLista, quantidade, itemController.itemToLista(id));
 	}
 	
 	public void atualizaCompraDeLista(String descritorLista, int id, String operacao, int quantidade) {
-		lista.atualizaCompraDeLista(descritorLista, id, operacao, quantidade);
+		listaController.atualizaCompraDeLista(descritorLista, id, operacao, quantidade);
 	}
 	
 	public void finalizarListaDeCompras(String descritorLista, String localDeCompra, double valorCompra) {	
-		lista.finalizarListaDeCompras(descritorLista, localDeCompra, valorCompra);
+		listaController.finalizarListaDeCompras(descritorLista, localDeCompra, valorCompra);
 	}
 	
 	public String getItemLista(String descritorLista, int posicao) {
-		return lista.getItemLista(descritorLista, posicao);
+		return listaController.getItemLista(descritorLista, posicao);
 	}
 	
 	public void deletaCompraDeLista(String descritorLista, int id) {
-		if(!sistema.getItens().containsKey(id))
+		if(!itemController.getItens().containsKey(id))
 			throw new IllegalArgumentException("Erro na exclusao de compra: item nao existe no sistema.");
-		lista.deletaCompraDeLista(descritorLista, id);
+		listaController.deletaCompraDeLista(descritorLista, id);
 	}
 	
-	/**
+	/*
 	 *  US4
 	 */
 	
@@ -148,7 +150,7 @@ public class Sistema {
 	}
 	
 	public ArrayList<ListaDeCompras> pesquisaListaDeComprasPorData(String data) {
-		return lista.pesquisaListaPorData(data);
+		return listaController.pesquisaListaPorData(data);
 	}
 	
 	public String getItemListaPorItem(int id, int posicao) {
@@ -157,45 +159,46 @@ public class Sistema {
 	}
 	
 	public ArrayList<ListaDeCompras> pesquisaListasDeComprasPorItem(int id) {
-		return lista.pesquisaItemListaPorItem(id);
+		return listaController.pesquisaItemListaPorItem(id);
 	}
 	
-	/**
+	/*
 	 * US5
 	 */
 	
 	public String geraAutomaticaUltimaLista() {
-		return lista.geraAutomaticaUltimaLista();
+		return listaController.geraAutomaticaUltimaLista();
 	}
 	
 	public String geraAutomaticaItem(String descritorItem) {
 		int ix = 1;
-		for(Item i : sistema.getItens().values()) {
+		for(Item i : itemController.getItens().values()) {
 			if(i.getNome().equals(descritorItem)) {
 				ix = i.getId();
 				break;
 			}
 		}
-		return lista.geraAutomaticaItem(sistema.getItens().get(ix));
+		
+		return listaController.geraAutomaticaItem(itemController.getItens().get(ix));
 	}
 	
 	public String geraAutomaticaItensMaisPresentes() {
 		ListaDeCompras list = new ListaDeCompras(null);
-		for(Item i: sistema.getItens().values()) {
+		for(Item i: itemController.getItens().values()) {
 			int cont = 0;
 			int quantidades = 0;
-			for(ListaDeCompras l : lista.getListas().values()) {
+			for(ListaDeCompras l : listaController.getListas().values()) {
 				if(l.listaItens().contains(i)) {
 					cont++;
 					quantidades+= l.pesquisaItemCompraEmLista(i.getId()).getQuantidade();
 				}
 			};
-			if(cont>= (lista.getListas().size()/2)) {
+			if(cont>= (listaController.getListas().size()/2)) {
 				list.addItem((int)Math.floor(quantidades/cont), i);
 			}
 		}
 		list.setDescricao("Lista automatica 3 "  + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
-		lista.addLista(list);
+		listaController.addLista(list);
 		return list.getDescricao();
 	}
 	
@@ -204,7 +207,7 @@ public class Sistema {
 	 */
 	
 	public String sugereMelhorEstabelecimento(String descritorLista, int posEstabelecimento, int posLista){
-		ArrayList<ListaDeCompras> list = pesquisaPrecoEstabelecimento(lista.getListas().get(descritorLista));
+		ArrayList<ListaDeCompras> list = pesquisaPrecoEstabelecimento(listaController.getListas().get(descritorLista));
 		if(list.size() == 0) {
 			throw new IllegalArgumentException("Faltam dados para informar sobre preços em locais de compras.");
 		}
@@ -221,7 +224,7 @@ public class Sistema {
 	public ArrayList<ListaDeCompras> pesquisaPrecoEstabelecimento(ListaDeCompras l){
 		HashMap<String, ListaDeCompras> list = new HashMap<String, ListaDeCompras>();
 		for(Compra c: l.getCompras()) {
-			for(Item i : sistema.getItens().values()) {
+			for(Item i : itemController.getItens().values()) {
 				if(c.getItem().equals(i)) {
 					for(String s: i.getPrecos().keySet()) {
 						if(list.containsKey(s)) {
@@ -252,19 +255,19 @@ public class Sistema {
 		return lista2;
 	}
 	
-	/**
+	/*
 	 * US7
 	 */
 	
 	public void iniciaSistema() {
-		sistema.setItens(SerializeSistema.carregaItens());
-		lista.setListas(SerializeSistema.carregaListas());
+		itemController.setItens(SerializeSistema.carregaItens());
+		listaController.setListas(SerializeSistema.carregaListas());
 	}
 	
 	
 	public void fechaSistema() {
-		SerializeSistema.salvarItens(sistema.getItens());
-		SerializeSistema.salvarListas(lista.getListas());
+		SerializeSistema.salvarItens(itemController.getItens());
+		SerializeSistema.salvarListas(listaController.getListas());
 	}
 	
 	

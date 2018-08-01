@@ -175,6 +175,7 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 	public void finalizarListaDeCompras(String localDaCompra, double valorFinal) {
 		setLocalDeCompra(localDaCompra);
 		setValorCompra(valorFinal);
+		hora = System.currentTimeMillis();
 	}
 	
 	public String getItemLista(int posicao) {

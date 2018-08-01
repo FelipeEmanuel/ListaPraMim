@@ -11,6 +11,9 @@ import comparators.ComparadorNome;
 import entidades.Compra;
 import entidades.Item;
 import entidades.ListaDeCompras;
+import util.Check;
+import util.CheckLista;
+import util.exceptions;
 
 public class ListaController {
 	
@@ -26,30 +29,26 @@ public class ListaController {
 	
 	
 	public String adicionaListaDeCompras(String descritorLista) {
-		if (descritorLista.trim().isEmpty() || descritorLista == null)
-			throw new IllegalArgumentException("Erro na criacao de lista de compras: descritor nao pode ser vazio ou nulo.");
+		Check.checkDescritorListaCriacao(descritorLista);
 		listas.put(descritorLista, new ListaDeCompras(descritorLista));
 		return descritorLista;
 	}
 	
 	public String pesquisaListaDeCompras(String descritorLista) {
-		if (descritorLista.trim().isEmpty() || descritorLista == null)
-			throw new IllegalArgumentException("Erro na pesquisa de compra: descritor nao pode ser vazio ou nulo.");
+		Check.checkDescritorListaPesquisa(descritorLista);
 		if (!listas.containsKey(descritorLista))
-			throw new IllegalArgumentException("Erro na pesquisa de compra: lista de compras nao existe.");		
+			exceptions.listaDeComprasNaoExisteException();		
 		return listas.get(descritorLista).toString();
 	}
 	
 	public String pesquisaCompraEmLista(String descritorLista, int id) {
-		if (id <= 0)
-			throw new IllegalArgumentException("Erro na pesquisa de compra: item id invalido.");
-		if (descritorLista.trim().isEmpty() || descritorLista == null)
-			throw new IllegalArgumentException("Erro na pesquisa de compra: descritor nao pode ser vazio ou nulo.");
+		Check.checkIdPesquisa(id);;
+		Check.checkDescritorListaPesquisa(descritorLista);
 		for(Compra c: listas.get(descritorLista).getCompras()) {
 			if(c.getItem().getId() == id)
 				return listas.get(descritorLista).pesquisaCompraEmLista(id);
 		}
-		throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
+		return exceptions.compraNãoEncontradaPesquisaException();
 	}
 	
 	public void atualizaCompraDeLista(String descritorLista, int id, String operacao, int quantidade) {
@@ -64,7 +63,7 @@ public class ListaController {
 					}
 				}
 				if(maybe)
-					throw new IllegalArgumentException("Erro na atualizacao de compra: compra nao encontrada na lista.");
+					exceptions.compraNãoEncontradaException();;
 				break;
 				
 			case	"diminui":
@@ -76,7 +75,7 @@ public class ListaController {
 					}
 				}
 				if(maybe)
-					throw new IllegalArgumentException("Erro na atualizacao de compra: compra nao encontrada na lista.");
+					exceptions.compraNãoEncontradaException();
 				break;
 				
 			default:
@@ -85,12 +84,9 @@ public class ListaController {
 	}
 	
 	public void finalizarListaDeCompras(String descritorLista, String localDeCompra, double valorCompra) {
-		if (descritorLista.trim().isEmpty() || descritorLista == null)
-			throw new IllegalArgumentException("Erro na finalizacao de lista de compras: descritor nao pode ser vazio ou nulo.");
-		if (localDeCompra.trim().isEmpty() || localDeCompra == null)
-			throw new IllegalArgumentException("Erro na finalizacao de lista de compras: local nao pode ser vazio ou nulo.");
-		if (valorCompra <= 0)
-			throw new IllegalArgumentException("Erro na finalizacao de lista de compras: valor final da lista invalido.");
+		Check.checkDescritorListaFinalizacao(descritorLista);
+		Check.checkLocalDeCompraFinalizacao(localDeCompra);
+		Check.checkValorCompra(valorCompra);
 		listas.get(descritorLista).finalizarListaDeCompras(localDeCompra, valorCompra);
 	}
 	
@@ -100,8 +96,7 @@ public class ListaController {
 	
 	public void deletaCompraDeLista(String descritorLista, int id) {
 		boolean maybe = true;
-		if (descritorLista.trim().isEmpty() || descritorLista == null)
-			throw new IllegalArgumentException("Erro na exclusao de compra: descritor nao pode ser vazio ou nulo.");
+		Check.checkDescritorDeletaCompraDeLista(descritorLista);
 		for(Compra c: listas.get(descritorLista).getCompras()) {
 			if(c.getItem().getId() == id) {
 				listas.get(descritorLista).deletaCompraDeLista(id);
@@ -114,8 +109,7 @@ public class ListaController {
 	}
 	
 	public ArrayList<ListaDeCompras> pesquisaListaPorData(String data) {
-		if (!data.equals(java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date())) && !(data.isEmpty() || data == null))
-			throw new IllegalArgumentException("Erro na pesquisa de compra: data em formato invalido, tente dd/MM/yyyy");
+		Check.checkDataPesquisaListaPorData(data);
 		ArrayList<ListaDeCompras> listaData = new ArrayList<ListaDeCompras>();
 		for(ListaDeCompras l : listas.values()) {
 			if(data.equals(l.dataString()))
@@ -127,7 +121,6 @@ public class ListaController {
 		return listaData;
 	}
 	
-	
 	public ArrayList<ListaDeCompras> pesquisaItemListaPorItem(int id) {
 		ArrayList<ListaDeCompras> lista = new ArrayList<ListaDeCompras>();
 		for(ListaDeCompras l : listas.values()) {
@@ -138,7 +131,7 @@ public class ListaController {
 				}			
 		}
 		if(lista.isEmpty())
-			throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
+			exceptions.compraNãoEncontradaPesquisaException();
 		lista.sort(new ComparadorLista());
 		return lista;
 	}
@@ -146,6 +139,7 @@ public class ListaController {
 	public String geraAutomaticaUltimaLista() {
 		ListaDeCompras l = autoLista();
 		l.setDescricao("Lista automatica 1 "  + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
+		listas.remove(l.getDescricao());
 		listas.put(l.getDescricao(),l);
 		return l.getDescricao();
 	}	
@@ -163,19 +157,17 @@ public class ListaController {
 	}
 
 	public String geraAutomaticaItem(Item item) {
-		ListaDeCompras l = new ListaDeCompras(null);
+		ListaDeCompras l = autoListaItem(item.toStringCompra());
 		l.setDescricao("Lista automatica 2 "  + java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date()));
-		l.setCompras(autoListaItem(item).getCompras());
 		listas.put(l.getDescricao(),l);
 		return l.getDescricao();
 	}
 	
-	
-	public ListaDeCompras autoListaItem(Item item) {
+	public ListaDeCompras autoListaItem(String item) {
 		long x = 0;
 		String sx = "";
 		for(String s : listas.keySet()) {
-			if(listas.get(s).getHora()>x && listas.get(s).toString().contains(item.getNome())) {				
+			if(listas.get(s).toString().trim().toLowerCase().contains(item.trim().toLowerCase()) && listas.get(s).getHora()>=x-System.currentTimeMillis()) {				
 				x = listas.get(s).getHora();
 				sx = s;
 			}

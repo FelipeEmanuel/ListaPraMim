@@ -1,4 +1,4 @@
-package entidades;
+package persistencia;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +9,9 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import entidades.Item;
+import entidades.ListaDeCompras;
 
 public class SerializeSistema {
 
