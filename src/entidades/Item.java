@@ -20,6 +20,7 @@ public abstract class Item implements Comparable<Item>, Serializable{
 	}
 	
 	public void addPreco(String supermercado, double preco) {
+		precos.put(supermercado, preco);
 	}
 	
 	@Override
