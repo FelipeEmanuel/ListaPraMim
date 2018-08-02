@@ -1,5 +1,16 @@
 package entidades;
 
+/**
+* Classe que faz uma representação abstratica dos itens.
+* 
+* Laboratório de Programação 2 - Projeto Final
+* 
+* @author Amanda Souza Magalhães - 116210439 
+* @author Felipe Emanuel de Farias Nunes - 117211052
+* @author Matheus Alves do Nascimento - 117110780
+*
+*/
+
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -12,6 +23,13 @@ public abstract class Item implements Comparable<Item>, Serializable{
 	private int id;
 	protected HashMap<String, Double> precos;
 	
+	/**
+	 * Método construtor de Item.
+	 * 
+	 * @param nome - Nome do item.
+	 * @param categoria - Categoria do item.
+	 * @param id - id do item.
+	 */
 	public Item(String nome, String categoria, int id) {
 		setNome(nome);
 		setCategoria(categoria);
@@ -19,15 +37,32 @@ public abstract class Item implements Comparable<Item>, Serializable{
 		precos = new HashMap<String, Double>();
 	}
 	
+	/**
+	 * Método que adiciona preço de um item em um determinado local.
+	 * 
+	 * @param supermercado - Local onde as compras são realizadas. 
+	 * @param preco - Preço do produto no determinado local.
+	 * 
+	 */
 	public void addPreco(String supermercado, double preco) {
 		precos.put(supermercado, preco);
 	}
 	
+	/**
+	 * Método que compara os nomes dos produtos.
+	 */
 	@Override
 	public int compareTo(Item i) {
 		return this.getNome().compareTo(i.getNome());
 	}
 	
+	/**
+	 * Método que compara o preço dos itens.
+	 * 
+	 * @param i - Item a ser comparado.
+	 * 
+	 * @return Retorna o menor preço entre dois itens.
+	 */
 	public int compareToPreco(Item i) {
 		return this.menorPreco().compareTo(i.menorPreco());
 	}
@@ -51,7 +86,7 @@ public abstract class Item implements Comparable<Item>, Serializable{
 	public HashMap<String, Double> getPrecos() {
 		return precos;
 	}
-
+	
 	public void setPrecos(HashMap<String, Double> precos) {
 		this.precos = precos;
 	}
@@ -60,6 +95,11 @@ public abstract class Item implements Comparable<Item>, Serializable{
 		return this.id;
 	}
 	
+	/**
+	 * Método que retorna o preço de um item.
+	 * 
+	 * @return Retorna o preço de um item dentro de um toString.
+	 */
 	public String getPreco() {
 		String retorno = " <";
 		for(String s: precos.keySet()) {
@@ -70,6 +110,11 @@ public abstract class Item implements Comparable<Item>, Serializable{
 		return retorno;
 	}
 	
+	/**
+	 * Método que compara o valor de dois preços.
+	 * 
+	 * @return Retorna o menor preço.
+	 */
 	public Double menorPreco() {
 		double d = Double.MAX_VALUE;
 		for (double x : precos.values()) {
@@ -111,7 +156,6 @@ public abstract class Item implements Comparable<Item>, Serializable{
 		return true;
 	}
 	
-	public abstract String toStringCompra() ;
+	public abstract String toStringCompra();
 
-	
 }

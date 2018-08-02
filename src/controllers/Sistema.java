@@ -479,6 +479,5 @@ public class Sistema {
 		SerializeSistema.salvarItens(itemController.getItens());
 		SerializeSistema.salvarListas(listaController.getListas());
 	}
-	
-	
+		
 }

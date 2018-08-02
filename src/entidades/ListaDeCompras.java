@@ -1,5 +1,16 @@
 package entidades;
 
+/**
+* Classe que representa as listas de compras.
+* 
+* Laboratório de Programação 2 - Projeto Final
+* 
+* @author Amanda Souza Magalhães - 116210439 
+* @author Felipe Emanuel de Farias Nunes - 117211052
+* @author Matheus Alves do Nascimento - 117110780
+*
+*/
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -17,14 +28,25 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 	private HashSet<Compra> compras;
 	private Date data;
 	private long  hora;
-
+	
+	/**
+	 * Método construtor de ListaDeCompras.
+	 * 
+	 * @param descricao Descrição da lista, ou nome da lista.
+	 */
 	public ListaDeCompras(String descricao) {
 		setDescricao(descricao);
 		compras = new HashSet<Compra>();
 		data = new Date();
 		hora = System.currentTimeMillis();
 	}
-
+	
+	/**
+	 * Método que adiciona um item a lista de compras.
+	 * 
+	 * @param quantidade - Quantidade de itens a ser adicionado.
+	 * @param item - Item a ser adicionado.
+	 */
 	public void addItem(int quantidade, Item item) {
 		compras.add(new Compra(quantidade, item));
 	}
@@ -49,12 +71,15 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		return data;
 	}
 	
-	public String  dataString() {
+	/**
+	 * Método que retorna a data de criação da lista como string.
+	 * @return retorna a data de criação da lista como string
+	 */
+	public String dataString() {
 		String date = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(getData());
 		return date;
 	}
 
-	
 	public String getLocalDeCompra() {
 		return localDeCompra;
 	}
@@ -63,22 +88,25 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		this.localDeCompra = localDeCompra;
 	}
 
-	
 	public Double getValorCompra() {
 		return valorCompra;
 	}
 
-	
 	public void setValorCompra(double valorCompra) {
 		this.valorCompra = valorCompra;
 	}
-
-	
 	
 	public long getHora() {
 		return hora;
 	}
 	
+	/**
+	 * Método que retorna um item da lista como string.
+	 * 
+	 * @param item - Item a ser pesquisado.
+	 * 
+	 * @return Retorna um item da lista como string.
+	 */
 	public String itemString(Item item){
 		for(Compra c: compras) {
 			if(c.getItem().equals(item)){
@@ -88,10 +116,20 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		return null;
 	}
 	
+	/**
+	 * Método que compara o valor final de duas listas de compras.
+	 * 
+	 * @param l - Listas a serem comparadas.
+	 * 
+	 * @return Retorna a comparação entre valores.
+	 */
 	public int compareToPreco(ListaDeCompras l) {
 		return this.getValorCompra().compareTo(l.getValorCompra());
 	}
 	
+	/**
+	 * Método que compara o nome de duas listas.
+	 */
 	@Override
 	public int compareTo(ListaDeCompras l) {
 		return this.getDescricao().compareTo(l.getDescricao());
@@ -106,7 +144,6 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		return result;
 	}
 
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -138,6 +175,13 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		return descricao  + retorno;
 	}
 	
+	/**
+	 * Método que pesquisa um item em uma lista de compras.
+	 * 
+	 * @param id - id do item a ser pesquisado.
+	 * 
+	 * @return Retorna o item caso o mesmo exista.
+	 */
 	public String pesquisaCompraEmLista(int id) {
 		for (Compra c: compras) {
 			if(c.getItem().getId() == id)
@@ -146,6 +190,13 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
 	}
 	
+	/**
+	 * Método que pesquisa um item em uma lista de compras.
+	 * 
+	 * @param id - id do item a ser pesquisado.
+	 * 
+	 * @return Retorna o item caso o mesmo exista.
+	 */
 	public Compra pesquisaItemCompraEmLista(int id) {
 		for (Compra c: compras) {
 			if(c.getItem().getId() == id)
@@ -154,6 +205,12 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		throw new IllegalArgumentException("Erro na pesquisa de compra: compra nao encontrada na lista.");
 	}
 	
+	/**
+	 * Método que aumenta a quantidade de um mesmo item.
+	 * 
+	 * @param id - id do item a ser aumentado.
+	 * @param quantidade - valor a ser aumentado.
+	 */
 	public void addQuantidade(int id, int quantidade) {
 		for (Compra c: compras) {
 			if(c.getItem().getId() == id)
@@ -161,6 +218,12 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		}
 	}
 	
+	/**
+	 * Método que diminui a quantidade de um mesmo item.
+	 * 
+	 * @param id - id do item a ser diminuido.
+	 * @param quantidade - valor a ser diminuido.
+	 */
 	public void diminuiQuantidade(int id, int quantidade) {
 		for (Compra c: compras) {
 			if(c.getItem().getId() == id) {
@@ -172,12 +235,25 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		}
 	}
 	
+	/**
+	 * Método que finaliza a lista de compras.
+	 * 
+	 * @param localDaCompra - Estabelecimento em que se está sendo realizado a compra.
+	 * @param valorFinal - valor total da lista de compras.
+	 */
 	public void finalizarListaDeCompras(String localDaCompra, double valorFinal) {
 		setLocalDeCompra(localDaCompra);
 		setValorCompra(valorFinal);
 		hora = System.currentTimeMillis();
 	}
 	
+	/**
+	 * Método que procura um item dentro de uma lista de compras.
+	 * 
+	 * @param posicao - Posição do item dentro da lista.
+	 * 
+	 * @return Retorna o item da posição pesquisada.
+	 */
 	public String getItemLista(int posicao) {
 		ArrayList<Item> itens = listaItens();
 		if(posicao >= itens.size())
@@ -192,6 +268,11 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		return "";
 	}
 	
+	/**
+	 * Método responsável pela lista de itens. 
+	 * 
+	 * @return Retorna a lista de itens.
+	 */
 	public ArrayList<Item> listaItens() {
 		
 		ArrayList<Item> itens = new ArrayList<Item>(),itens2 = new ArrayList<Item>();
@@ -244,6 +325,11 @@ public class ListaDeCompras implements Comparable<ListaDeCompras>, Serializable{
 		return itens;
 	}
 	
+	/**
+	 * Método que remove um item de uma lista de compras.
+	 * 
+	 * @param id - id do item a ser removido.
+	 */
 	public void deletaCompraDeLista(int id) {
 		for(Compra c : compras) {
 			if(c.getItem().getId() == id) {

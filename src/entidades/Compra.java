@@ -1,7 +1,7 @@
 package entidades;
 
 /**
-* Classe que guarda compras da lista.
+* Classe que representa as compras da lista.
 * 
 * Laboratório de Programação 2 - Projeto Final
 * 
@@ -64,4 +64,5 @@ public class Compra implements Serializable{
 	public String toString() {
 		return quantidade + " " + item.toStringCompra();
 	}
+	
 }
